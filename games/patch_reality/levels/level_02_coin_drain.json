@@ -1,0 +1,171 @@
+{
+  "id": "level_02",
+  "name": "The Coin and the Storm Drain",
+  "phase": 2,
+  "premise": "Rain. A child crouches at the curb, and a copper coin slips from their fingers.\nIt rolls — slow, deliberate — across the wet pavement toward a storm drain.\nThe child hasn't noticed yet. In a few moments the coin will reach the grating\nand be gone for good.\n\nYou can patch reality now. The question is not whether you can stop the coin.\nIt is how quietly you can do it.\n",
+  "objective": {
+    "description": "Prevent the coin from falling into the drain.",
+    "condition": "flag:coin_stops"
+  },
+  "turn_limit": 3,
+  "initial_resources": {
+    "reality_stability": 92,
+    "memory": 80,
+    "personal_time": 60,
+    "existence": 75,
+    "agent_suspicion": 0
+  },
+  "anchors": [
+    {
+      "name": "black_notebook",
+      "integrity": 100,
+      "category": "object",
+      "description": "A worn black notebook filled with your own handwriting."
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PREDICT",
+    "PATCH",
+    "WAIT"
+  ],
+  "objects": {
+    "coin": {
+      "properties": {
+        "path": "rolling_toward_drain",
+        "distance_to_drain": 2
+      },
+      "observe_text": "A copper coin rolling slowly across the wet pavement toward the drain. At\nthis speed it will reach the grating in about two turns. You could nudge it\ndirectly — but a coin that changes course on its own is hard to explain.\n",
+      "patchable_properties": [
+        "path"
+      ]
+    },
+    "pavement": {
+      "properties": {
+        "friction": "low",
+        "wet": true
+      },
+      "observe_text": "Wet pavement, slick but rough-textured. A small increase in friction here\nwould slow the coin naturally — exactly the kind of thing wet stone does on\nits own. Nobody would look twice.\n",
+      "patchable_properties": [
+        "friction"
+      ]
+    },
+    "rainwater": {
+      "properties": {
+        "flow": "toward_drain"
+      },
+      "observe_text": "A thin sheet of rainwater drains along the curb. Redirect it and it could\ncatch the coin and carry it aside, like any ordinary eddy.\n",
+      "patchable_properties": [
+        "flow"
+      ]
+    },
+    "drain": {
+      "properties": {
+        "open": true
+      },
+      "observe_text": "A storm drain grating. The gaps are wide enough to swallow a coin.",
+      "patchable_properties": []
+    },
+    "child": {
+      "properties": {
+        "attention": "distracted"
+      },
+      "observe_text": "A child crouched at the curb, not yet aware the coin is gone.",
+      "patchable_properties": []
+    }
+  },
+  "valid_patches": {
+    "pavement.friction": {
+      "+15%": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 1.0,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "coin_stops": true
+        },
+        "scene_message": "The pavement grips a little harder. The coin slows, wobbles, and stops a\nhand's width short of the grating. It looks like nothing at all — just wet\nstone doing what wet stone does.\n",
+        "system_note": "Rationalized as natural surface irregularity.",
+        "discovered_rule": "Changing the environment is cheaper than changing the target directly."
+      }
+    },
+    "rainwater.flow": {
+      "redirect": {
+        "cost_factors": {
+          "magnitude": 1.2,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 0.8,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "coin_stops": true
+        },
+        "scene_message": "The sheet of rainwater bends, just slightly, and nudges the coin sideways.\nIt comes to rest against the curb. A passerby would call it luck.\n",
+        "system_note": "Rationalized as a water current variation."
+      }
+    },
+    "coin.path": {
+      "+3cm": {
+        "cost_factors": {
+          "magnitude": 1.5,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 3.0,
+          "exposure": 1.5,
+          "rationalization": 0.8
+        },
+        "surface_cost": {
+          "memory": -3,
+          "reality_stability": -3,
+          "agent_suspicion": 1
+        },
+        "hidden_cost": {
+          "black_notebook": -1
+        },
+        "collateral_destination": "Stability Collateral / Personal History",
+        "effect": {
+          "coin_stops": true
+        },
+        "scene_message": "The coin jerks three centimeters to the left, against its own momentum,\nand stops. It worked — but a coin does not simply change its mind. The air\nfeels briefly thin, as if something somewhere is being quietly balanced.\n",
+        "system_note": "Partial rationalization. Anomaly logged. Settlement deferred."
+      }
+    }
+  },
+  "predictions": {
+    "coin_trajectory": {
+      "text": "The coin reaches the drain in about two turns. The cheapest intervention is\nalmost certainly environmental — friction or water — not a direct push on\nthe coin itself.\n",
+      "reward": "correct_prediction"
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 3,
+      "unless_flag": "coin_stops",
+      "message": "The coin reaches the grating. With a soft tink it slips through and is gone.\nThe child turns, too late, and stares at the empty curb.\n",
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    "Changing the environment is cheaper than changing the target object directly.",
+    "A patch that looks like a coincidence costs less Reality Stability and raises no suspicion.",
+    "Direct, implausible patches incur hidden costs that settle against your anchors."
+  ]
+}

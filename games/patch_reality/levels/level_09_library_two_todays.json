@@ -1,0 +1,202 @@
+{
+  "id": "level_09",
+  "name": "The Library With Two Todays",
+  "phase": 4,
+  "premise": "A library terminal says a book was borrowed today and returned tomorrow. The\nlibrarian is about to archive the transaction, making both dates official.\n",
+  "objective": {
+    "description": "Reconcile the conflicting date records before checkout finalizes.",
+    "condition": "flag:record_reconciled"
+  },
+  "turn_limit": 6,
+  "initial_resources": {
+    "reality_stability": 72,
+    "memory": 52,
+    "personal_time": 36,
+    "existence": 66,
+    "agent_suspicion": 7
+  },
+  "anchors": [
+    {
+      "name": "calendar_habit",
+      "integrity": 65,
+      "category": "record",
+      "description": "Your trust that dates move in one direction."
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PREDICT",
+    "PATCH",
+    "AUDIT",
+    "CHECK_ANCHOR",
+    "REINFORCE_ANCHOR",
+    "WAIT"
+  ],
+  "objects": {
+    "terminal": {
+      "properties": {
+        "display": "inconsistent"
+      },
+      "observe_text": "The public display shows borrowed today, returned tomorrow. Patching it\nwould hide the contradiction only on this screen.\n",
+      "patchable_properties": [
+        "display"
+      ]
+    },
+    "checkout_ledger": {
+      "properties": {
+        "date": "split"
+      },
+      "observe_text": "The source checkout record has both dates attached to one transaction.\nRepair this before the archive copies it.\n",
+      "patchable_properties": [
+        "date"
+      ]
+    },
+    "archive_queue": {
+      "properties": {
+        "delay": "none"
+      },
+      "observe_text": "The transaction is queued for archival. Delaying the queue buys a turn.\n",
+      "patchable_properties": [
+        "delay"
+      ]
+    },
+    "librarian": {
+      "properties": {
+        "attention": "archiving"
+      },
+      "observe_text": "The librarian is about to approve the archive. A distraction helps timing,\nnot consistency.\n",
+      "patchable_properties": [
+        "attention"
+      ]
+    },
+    "transaction_history": {
+      "properties": {
+        "auditable": true
+      },
+      "observe_text": "The transaction history points back to one source ledger row. Audit can\nconfirm whether the display or the source is wrong.\n",
+      "patchable_properties": []
+    }
+  },
+  "valid_patches": {
+    "checkout_ledger.date": {
+      "today": {
+        "cost_factors": {
+          "magnitude": 1.1,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 3.0,
+          "exposure": 0.8,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "record_reconciled": true
+        },
+        "scene_message": "The source row collapses to one ordinary date. The display and archive agree a moment later.",
+        "system_note": "Source record repair before downstream commitment.",
+        "discovered_rule": "Edit source records before displays or archives copy the contradiction."
+      }
+    },
+    "terminal.display": {
+      "today": {
+        "cost_factors": {
+          "magnitude": 0.9,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 0.9,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "display_fixed": true
+        },
+        "scene_message": "The terminal now shows only today's date. The archive queue still holds tomorrow.",
+        "system_note": "Display-only fix. Source contradiction remains."
+      }
+    },
+    "archive_queue.delay": {
+      "hold": {
+        "cost_factors": {
+          "magnitude": 0.8,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.6,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "personal_time": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "archive_delayed": true
+        },
+        "scene_message": "The archive job stalls on a routine lock. You have a little more time.",
+        "system_note": "Timing patch only."
+      }
+    },
+    "librarian.attention": {
+      "distract": {
+        "cost_factors": {
+          "magnitude": 0.8,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.7,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "librarian_distracted": true
+        },
+        "scene_message": "The librarian turns to answer a patron. The record is still split.",
+        "system_note": "Exposure reduction only."
+      }
+    }
+  },
+  "audit_entries": [
+    {
+      "target": "transaction_history",
+      "text": "Audit confirms one source row is split. The terminal is only repeating the\nledger; patch the checkout ledger before the archive copies it.\n",
+      "effect": {
+        "ledger_audited": true
+      },
+      "reward_events": [
+        "successful_audit"
+      ],
+      "suspicion_change": 1
+    }
+  ],
+  "predictions": {
+    "date_conflict": {
+      "text": "The display is downstream. The checkout ledger is the lowest source record\nand should be patched before archival.\n",
+      "reward": "correct_prediction"
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 6,
+      "unless_flag": "record_reconciled",
+      "message": "The librarian approves the archive. Tomorrow is now filed under today.",
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    "Information edits are cheapest at the source before observers commit copies.",
+    "Display fixes can be correct-looking and still incomplete."
+  ]
+}

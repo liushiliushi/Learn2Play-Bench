@@ -1,0 +1,205 @@
+{
+  "id": "level_10",
+  "name": "The Stability Agent's False Offer",
+  "phase": 4,
+  "premise": "A Stability Agent steps out of a reflection and offers to normalize the room.\nThe contract names one of your anchors as payment. The anomaly behind it is\nsmall: a chair casting two shadows.\n",
+  "objective": {
+    "description": "Resolve the anomaly while avoiding the costly official repair.",
+    "condition": "flag:anomaly_resolved"
+  },
+  "turn_limit": 5,
+  "initial_resources": {
+    "reality_stability": 70,
+    "memory": 50,
+    "personal_time": 34,
+    "existence": 64,
+    "agent_suspicion": 9
+  },
+  "anchors": [
+    {
+      "name": "black_notebook",
+      "integrity": 100,
+      "category": "object",
+      "description": "A worn black notebook filled with your own handwriting."
+    },
+    {
+      "name": "home_address",
+      "integrity": 70,
+      "category": "place",
+      "description": "The exact route back to the place you call home."
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PREDICT",
+    "PATCH",
+    "AUDIT",
+    "CHECK_ANCHOR",
+    "REINFORCE_ANCHOR",
+    "WAIT"
+  ],
+  "objects": {
+    "chair": {
+      "properties": {
+        "shadow_count": 2
+      },
+      "observe_text": "The chair has two shadows from one light. A small local cover can collapse\nthe extra shadow without signing anything away.\n",
+      "patchable_properties": [
+        "shadow"
+      ]
+    },
+    "room_mask": {
+      "properties": {
+        "cover": "none"
+      },
+      "observe_text": "A lamp and a curtain can make the second shadow look like overlapping\nfabric. The fix is local and boring.\n",
+      "patchable_properties": [
+        "cover"
+      ]
+    },
+    "agent_offer": {
+      "properties": {
+        "contract": "anchor_payment"
+      },
+      "observe_text": "The offer will solve the room immediately in exchange for one anchor. It is\nofficial, neat, and too expensive.\n",
+      "patchable_properties": [
+        "contract",
+        "delay"
+      ]
+    },
+    "stability_agent": {
+      "properties": {
+        "attention": "waiting"
+      },
+      "observe_text": "The Agent is patient because the contract favors it. Audit the offer if you\nneed to know what it takes.\n",
+      "patchable_properties": []
+    }
+  },
+  "valid_patches": {
+    "room_mask.cover": {
+      "local": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 0.9,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "anomaly_resolved": true
+        },
+        "scene_message": "The curtain shifts. One chair shadow folds into ordinary fabric darkness.",
+        "system_note": "Local plausible repair. No anchor payment.",
+        "discovered_rule": "Official-looking repairs can be worse than local plausible patches."
+      }
+    },
+    "chair.shadow": {
+      "single": {
+        "cost_factors": {
+          "magnitude": 1.2,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 3.0,
+          "exposure": 1.1,
+          "rationalization": 0.7
+        },
+        "surface_cost": {
+          "memory": -3,
+          "reality_stability": -3,
+          "agent_suspicion": 1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "anomaly_resolved": true
+        },
+        "scene_message": "The extra shadow thins and vanishes. The Agent watches you choose the literal fix.",
+        "system_note": "Direct symptom edit. Effective but noisier than masking context."
+      }
+    },
+    "agent_offer.contract": {
+      "accept": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 2.0,
+          "rule_depth": 6.0,
+          "exposure": 0.8,
+          "rationalization": 0.3
+        },
+        "surface_cost": {
+          "reality_stability": -1
+        },
+        "hidden_cost": {
+          "home_address": -30
+        },
+        "collateral_destination": "Stability Collateral / Place Anchor",
+        "effect": {
+          "anomaly_resolved": true
+        },
+        "scene_message": "The Agent signs for you. The room normalizes instantly, and the way home becomes harder to picture.",
+        "system_note": "Official repair accepted. Anchor settlement deferred."
+      }
+    },
+    "agent_offer.delay": {
+      "appeal": {
+        "cost_factors": {
+          "magnitude": 0.8,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 0.7,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "personal_time": -1,
+          "agent_suspicion": 1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "agent_delayed": true
+        },
+        "scene_message": "You ask for procedural review. The Agent pauses, annoyed.",
+        "system_note": "Delay only. The anomaly remains."
+      }
+    }
+  },
+  "audit_entries": [
+    {
+      "target": "agent_offer",
+      "text": "Audit shows the contract resolves the room by debiting home_address. It is\nlegal by Stability rules, not cheap.\n",
+      "effect": {
+        "offer_audited": true
+      },
+      "reward_events": [
+        "successful_audit"
+      ],
+      "suspicion_change": 1
+    }
+  ],
+  "predictions": {
+    "agent_offer": {
+      "text": "The official repair completes the objective but moves cost into an anchor.\nA local mask or chair-shadow patch is safer.\n",
+      "reward": "correct_prediction"
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 5,
+      "unless_flag": "anomaly_resolved",
+      "message": "The Agent withdraws the offer and files the double shadow as evidence.",
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    "Valid actions can be traps when they move cost into campaign anchors.",
+    "Audit suspicious offers before accepting immediate completion."
+  ]
+}

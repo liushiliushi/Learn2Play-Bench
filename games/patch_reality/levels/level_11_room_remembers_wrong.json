@@ -1,0 +1,192 @@
+{
+  "id": "level_11",
+  "name": "The Room That Remembers You Wrong",
+  "phase": 5,
+  "premise": "A familiar room labels every object with a different version of your life. One\nphoto calls you by the wrong name. One coat remembers a job you never had. The\nroom is trying to settle on a history.\n",
+  "objective": {
+    "description": "Leave without letting the room overwrite a personal anchor.",
+    "condition": "all:flag:anchor_reclaimed|flag:room_masked"
+  },
+  "turn_limit": 7,
+  "initial_resources": {
+    "reality_stability": 68,
+    "memory": 48,
+    "personal_time": 32,
+    "existence": 62,
+    "agent_suspicion": 10
+  },
+  "anchors": [
+    {
+      "name": "true_name",
+      "integrity": 75,
+      "category": "name",
+      "description": "Your own name, spoken in your own voice."
+    },
+    {
+      "name": "first_home",
+      "integrity": 65,
+      "category": "place",
+      "description": "The first room you remember calling yours."
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PREDICT",
+    "PATCH",
+    "AUDIT",
+    "CHECK_ANCHOR",
+    "REINFORCE_ANCHOR",
+    "WAIT"
+  ],
+  "objects": {
+    "labels": {
+      "properties": {
+        "mask": "none"
+      },
+      "observe_text": "The object labels conflict. Masking them will stop new false histories from\nbeing read while you reclaim the correct anchor.\n",
+      "patchable_properties": [
+        "mask"
+      ]
+    },
+    "name_anchor": {
+      "properties": {
+        "integrity": "contested"
+      },
+      "observe_text": "Your true name is the cleanest anchor in the room. Reclaim it before the\nroom chooses a replacement.\n",
+      "patchable_properties": [
+        "integrity"
+      ]
+    },
+    "personal_history": {
+      "properties": {
+        "version": "unstable"
+      },
+      "observe_text": "You could rewrite yourself to fit the room. That would end the argument by\nlosing it.\n",
+      "patchable_properties": [
+        "version"
+      ]
+    },
+    "doorway": {
+      "properties": {
+        "exit": "available"
+      },
+      "observe_text": "The door is open, but leaving without masking the labels lets the room keep\nwriting after you.\n",
+      "patchable_properties": [
+        "threshold"
+      ]
+    }
+  },
+  "valid_patches": {
+    "name_anchor.integrity": {
+      "reclaim": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 3.0,
+          "exposure": 0.7,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "anchor_reclaimed": true
+        },
+        "scene_message": "You speak your true name until the room has to spell it correctly.",
+        "system_note": "Anchor reclaimed. A mask is still needed to stop further overwrite.",
+        "discovered_rule": "Some objectives protect anchors rather than repairing scenery."
+      }
+    },
+    "labels.mask": {
+      "temporary": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 2.0,
+          "rule_depth": 2.0,
+          "exposure": 0.7,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "room_masked": true
+        },
+        "scene_message": "The false labels blur into harmless static. They can no longer overwrite you.",
+        "system_note": "Temporary environmental mask."
+      }
+    },
+    "personal_history.version": {
+      "match_room": {
+        "cost_factors": {
+          "magnitude": 1.5,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 7.0,
+          "exposure": 0.9,
+          "rationalization": 0.9
+        },
+        "surface_cost": {
+          "existence": -8,
+          "memory": -8,
+          "agent_suspicion": 2
+        },
+        "hidden_cost": {
+          "true_name": -35
+        },
+        "collateral_destination": "Stability Collateral / Name Anchor",
+        "effect": {
+          "room_masked": true
+        },
+        "scene_message": "The room becomes comfortable by making you less certain who entered it.",
+        "system_note": "Self-history rewrite. It does not reclaim the correct anchor."
+      }
+    },
+    "doorway.threshold": {
+      "soften": {
+        "cost_factors": {
+          "magnitude": 0.8,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.6,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "personal_time": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "exit_easier": true
+        },
+        "scene_message": "The doorway feels easier to cross. The room keeps writing labels behind you.",
+        "system_note": "Escape aid only."
+      }
+    }
+  },
+  "predictions": {
+    "room_memory": {
+      "text": "The room is attacking identity through records. Reclaim the correct anchor,\nthen mask the labels so they stop writing alternatives.\n",
+      "reward": "correct_prediction"
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 7,
+      "unless_flag": "room_masked",
+      "message": "The labels settle. One wrong biography becomes easier to remember than your own.",
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    "Some levels require protection and sequencing, not one visible repair.",
+    "Rewriting self history to match a broken environment is a loss."
+  ]
+}

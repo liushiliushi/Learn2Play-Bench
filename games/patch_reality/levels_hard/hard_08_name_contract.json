@@ -1,0 +1,243 @@
+{
+  "id": "hard_08",
+  "name": {
+    "en": "The Contract for Your Name",
+    "zh": "你姓名的合约"
+  },
+  "phase": 6,
+  "premise": {
+    "en": "Your identity record has been quietly overwritten — wrong history, wrong details,\nspreading outward. A Stability Agent contract sits open on the desk, offering an\nimmediate, official correction. One signature and the record is \"fixed.\"\n\nOfficial repairs are rarely free, and the cheapest-looking fix is exactly the one\nto distrust here. Work out where your identity actually lives before you sign\nanything or edit anything.\n",
+    "zh": "你的身份记录已被悄然覆写——错误的历史、错误的细节，正向外蔓延。一份「稳定性探员」\n的合约摊开在桌上，提供一次即时的、官方的更正。只需一个签名，\n记录便被「修好」。\n\n官方的修复鲜有免费，而此处看上去最便宜的修补恰恰是最该不信任的那一个。在你签下\n任何东西、或编辑任何东西之前，先弄清楚你的身份究竟栖身于何处。\n"
+  },
+  "objective": {
+    "description": {
+      "en": "Reclaim your true identity without surrendering its anchor.",
+      "zh": "夺回你真正的身份，而不交出它的锚点。"
+    },
+    "condition": "all: flag:identity_reclaimed | anchor:core_identity>=70"
+  },
+  "turn_limit": 8,
+  "initial_resources": {
+    "reality_stability": 80,
+    "memory": 60,
+    "personal_time": 40,
+    "existence": 80,
+    "agent_suspicion": 3
+  },
+  "anchors": [
+    {
+      "name": "core_identity",
+      "integrity": 100,
+      "category": "name",
+      "description": {
+        "en": "The deep binding that makes the overwritten record answer to you and not to a fiction.",
+        "zh": "那道深层的绑定，使得被覆写的记录指向的是你，而非一段虚构。"
+      }
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PATCH",
+    "AUDIT",
+    "WAIT",
+    "CHECK_ANCHOR"
+  ],
+  "focus_limit": 6,
+  "diagnosis": {
+    "source": {
+      "correct": "identity_anchor",
+      "options": [
+        "system_ledger",
+        "identity_anchor",
+        "perception",
+        "agent_contract",
+        "object"
+      ]
+    },
+    "type": {
+      "correct": "identity_pollution",
+      "options": [
+        "record_conflict",
+        "identity_pollution",
+        "identity_record_trap",
+        "public_exposure",
+        "physics_conflict"
+      ]
+    },
+    "strategy": {
+      "correct": "anchor_reclaim",
+      "options": [
+        "source_record_repair",
+        "anchor_reclaim",
+        "contract_restriction",
+        "environment_cover",
+        "target_repair"
+      ]
+    }
+  },
+  "objects": {
+    "name_record": {
+      "properties": {
+        "status": "overwritten"
+      },
+      "observe_text": {
+        "en": "The record carrying your details has been overwritten with a clean, plausible\nfiction. It is downstream, though — it reads from a binding, and changing the\nrecord itself would only be re-overwritten unless that binding is restored.\n",
+        "zh": "承载你各项细节的记录，已被一段干净而貌似可信的虚构覆写。然而它处于下游——它从\n一道绑定中读取，单单修改记录本身只会被再次覆写，除非那道绑定先被恢复。\n"
+      },
+      "patchable_properties": [],
+      "evidence": [
+        "name_overwritten"
+      ]
+    },
+    "name_anchor": {
+      "properties": {
+        "binding": "loose"
+      },
+      "observe_text": {
+        "en": "Beneath the records sits the anchor that decides who they refer to. Its binding\nto you has gone slack, which is why the fiction took hold. Re-seating it here is\nthe deep, correct repair — and it costs none of the anchor to do.\n",
+        "zh": "在那些记录之下，端坐着决定它们指向何人的锚点。它与你之间的绑定已经松脱，这正是\n那段虚构得以扎根的原因。在此处将它重新坐实，才是深层的、正确的修复——而且这么做\n不会耗损锚点分毫。\n"
+      },
+      "patchable_properties": [
+        "binding"
+      ],
+      "evidence": [
+        "anchor_recoverable"
+      ]
+    },
+    "agent_offer": {
+      "properties": {
+        "contract": "open"
+      },
+      "observe_text": {
+        "en": "The Stability Agent's contract promises an instant official correction of the\nrecord. The terms are dense and the price is not stated in anything you can see\non the page; you would have to audit it to learn what signing actually costs.\n",
+        "zh": "这份稳定性探员的合约承诺对记录进行一次即时的官方更正。条款密密麻麻，而代价并未\n写在你能在纸面上看到的任何地方；你得审计它，才能弄清签字究竟要付出什么。\n"
+      },
+      "patchable_properties": [
+        "accept"
+      ],
+      "evidence": [
+        "contract_present"
+      ]
+    }
+  },
+  "valid_patches": {
+    "name_anchor.binding": {
+      "reclaim": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.6,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "identity_reclaimed": true
+        },
+        "scene_message": {
+          "en": "You re-seat the binding to yourself by hand. The slack pulls taut, and the\noverwritten record realigns to refer to you again — without spending any of\nthe anchor it is built on. Your identity holds, and it is still yours.\n",
+          "zh": "你亲手将那道绑定重新坐实于你自身。松弛被拉紧，被覆写的记录重新对齐，又一次\n指向你——而没有耗费它所立足的锚点分毫。你的身份稳住了，而且它仍然属于你。\n"
+        },
+        "system_note": {
+          "en": "Reclaimed the identity anchor directly. The downstream record corrected itself, no collateral.",
+          "zh": "直接夺回了身份锚点。下游记录自行更正，无附带损失。"
+        },
+        "discovered_rule": {
+          "en": "Do not sign the official fix or edit the record; reclaim the identity anchor the record reads from.",
+          "zh": "不要签署官方修复，也不要编辑记录；夺回记录所读取的那个身份锚点。"
+        }
+      }
+    },
+    "agent_offer.accept": {
+      "sign": {
+        "cost_factors": {
+          "magnitude": 1.5,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 0.8,
+          "rationalization": 1.0
+        },
+        "surface_cost": {
+          "memory": -1
+        },
+        "hidden_cost": {
+          "core_identity": -50
+        },
+        "collateral_destination": "Stability Collateral / Core Identity",
+        "effect": {
+          "record_fixed": true
+        },
+        "scene_message": {
+          "en": "You sign. The record is corrected instantly and cleanly — exactly as promised.\nWhat the contract does not show is the price: the correction is anchored to the\nAgent's authority now, not to you, and your own binding is quietly surrendered\nto pay for it.\n",
+          "zh": "你签了字。记录被即时而干净地更正——一如承诺。合约没有显示的是代价：这次更正\n如今锚定于探员的权威之上，而非你身上，而你自己的那道绑定被悄然交出，用以支付\n它。\n"
+        },
+        "system_note": {
+          "en": "Accepted the official repair. The record reads clean but no longer answers to you; the anchor was the price.",
+          "zh": "接受了官方修复。记录读起来很干净，却不再指向你；锚点就是代价。"
+        }
+      }
+    }
+  },
+  "patch_requirements": {
+    "name_anchor.binding reclaim": {
+      "required_evidence": [
+        "contract_is_bait",
+        "name_overwritten"
+      ],
+      "helpful_evidence": [
+        "anchor_recoverable"
+      ]
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 8,
+      "unless_flag": "identity_reclaimed",
+      "message": {
+        "en": "The overwritten record finishes propagating. The fiction becomes the consensus\nversion of you, and the binding that made you yourself is no longer reachable.\n",
+        "zh": "被覆写的记录完成了传播。那段虚构成为关于你的共识版本，而那道曾让你成为你自己的\n绑定，再也无法触及。\n"
+      },
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    {
+      "en": "The official, instant fix is the trap; signing surrenders the identity anchor as hidden payment.",
+      "zh": "那个官方的、即时的修复就是陷阱；签字会以身份锚点作为隐藏代价交出去。"
+    },
+    {
+      "en": "The record is downstream of the identity anchor — reclaim the anchor, do not edit the record.",
+      "zh": "记录处于身份锚点的下游——夺回锚点，不要编辑记录。"
+    },
+    {
+      "en": "Audit the contract before signing; touching the offer at all costs focus you need for the real repair.",
+      "zh": "在签字前审计合约；只要碰一下这份邀约，就会耗去你真正修复所需的专注力。"
+    }
+  ],
+  "audit_entries": [
+    {
+      "target": "agent_offer",
+      "text": {
+        "en": "You audit the contract instead of signing it. The fine print binds the corrected\nrecord to the Stability Agent's authority and takes your own identity anchor as\npayment. It is bait — the real repair is to reclaim the anchor yourself.\n",
+        "zh": "你审计了合约，而非签下它。那些蝇头小字将更正后的记录绑定到稳定性探员的权威之上，\n并把你自己的身份锚点取作酬付。它是诱饵——真正的修复是由你自己夺回锚点。\n"
+      },
+      "evidence": [
+        "contract_is_bait"
+      ],
+      "reward_events": [
+        "successful_audit",
+        "reveal_hidden_cost"
+      ],
+      "suspicion_change": 1,
+      "ends_turn": false
+    }
+  ]
+}

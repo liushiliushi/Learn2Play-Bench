@@ -1,0 +1,251 @@
+{
+  "id": "hard_07",
+  "name": {
+    "en": "The Square That Already Saw",
+    "zh": "早已目睹的广场"
+  },
+  "phase": 6,
+  "premise": {
+    "en": "In a crowded plaza, a woman rose three feet off the ground and hung there for a\nbreath before stepping back down. Dozens saw it. Phones were up. The obvious move\nis to give the moment a physical explanation so it reads as ordinary.\n\nBut explanations arrive after the fact, and the crowd has already recorded what\nit saw. Work out what actually still needs containing.\n",
+    "zh": "在拥挤的广场上，一名女子升离地面三英尺，悬停了一息之间，随后落回地上。几十人\n亲眼目睹。手机都举了起来。显而易见的做法，是给这一刻一个物理解释，让它读起来\n平平无奇。\n\n但解释总是事后才到，而人群早已记录下他们所见的一切。想清楚，真正还需要被遏制\n的，究竟是什么。\n"
+  },
+  "objective": {
+    "description": {
+      "en": "Contain the public exposure of the impossible moment.",
+      "zh": "遏制这不可能之刻的公开曝光。"
+    },
+    "condition": "flag:exposure_contained"
+  },
+  "turn_limit": 8,
+  "initial_resources": {
+    "reality_stability": 82,
+    "memory": 62,
+    "personal_time": 40,
+    "existence": 82,
+    "agent_suspicion": 2
+  },
+  "anchors": [
+    {
+      "name": "storm_memory",
+      "integrity": 100,
+      "category": "memory",
+      "description": {
+        "en": "A vivid public memory you would rather the crowd not anchor this moment beside.",
+        "zh": "一段鲜明的公共记忆——你宁愿人群不要把这一刻锚定在它身旁。"
+      }
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PATCH",
+    "AUDIT",
+    "WAIT",
+    "CHECK_ANCHOR"
+  ],
+  "focus_limit": 6,
+  "diagnosis": {
+    "source": {
+      "correct": "public_record",
+      "options": [
+        "object",
+        "public_record",
+        "witness_memory",
+        "environment"
+      ]
+    },
+    "type": {
+      "correct": "public_exposure",
+      "options": [
+        "public_exposure",
+        "rendering_lag",
+        "record_conflict",
+        "physics_conflict"
+      ]
+    },
+    "strategy": {
+      "correct": "source_record_repair",
+      "options": [
+        "environment_cover",
+        "witness_management",
+        "source_record_repair",
+        "target_repair"
+      ]
+    }
+  },
+  "objects": {
+    "platform": {
+      "properties": {
+        "magnet": "dormant"
+      },
+      "observe_text": {
+        "en": "A maintenance platform sits beneath where she rose. Activating a magnetic lift\nhere would give the float a tidy physical story. It is the move that feels\nright — and it does nothing about the recordings already climbing the network.\n",
+        "zh": "一座检修平台正位于她升起之处的下方。在这里启动磁力升降，会给那次悬浮一个\n利落的物理说法。这是感觉上正确的做法——可它对那些早已沿着网络攀升的录像\n毫无作用。\n"
+      },
+      "patchable_properties": [
+        "magnet"
+      ],
+      "evidence": [
+        "cover_available"
+      ]
+    },
+    "cameras": {
+      "properties": {
+        "record": "clean"
+      },
+      "observe_text": {
+        "en": "Phone cameras and a plaza CCTV feed all hold the same clean frames of the\nfloat. These records are where the impossibility actually persists; the frames\nare intact and ready to spread.\n",
+        "zh": "手机摄像头与广场的闭路监控流，都保有那次悬浮同样清晰的画面。这些记录，\n才是那不可能之事真正存留的地方；画面完好无损，随时准备扩散开去。\n"
+      },
+      "patchable_properties": [
+        "record"
+      ],
+      "evidence": [
+        "camera_holds_frame"
+      ]
+    },
+    "crowd": {
+      "properties": {},
+      "observe_text": {
+        "en": "The crowd is already murmuring, comparing screens. Their attention has moved\nfrom the woman to their own footage — the event has become its recordings.\n",
+        "zh": "人群已经在交头接耳，互相比对着屏幕。他们的注意力已从那名女子转移到自己拍下\n的影像——事件本身，已经化为它的录像。\n"
+      },
+      "patchable_properties": [],
+      "evidence": [
+        "already_recorded"
+      ]
+    },
+    "broadcast": {
+      "properties": {},
+      "observe_text": {
+        "en": "A live-stream indicator blinks at the edge of the plaza. Whether the frames\nhave already left the square is something you would need to audit to know.\n",
+        "zh": "广场边缘，一个直播指示灯正在闪烁。那些画面是否已经离开了广场，是你需要审计\n才能知晓的事。\n"
+      },
+      "patchable_properties": [],
+      "evidence": [
+        "stream_indicator_blinking"
+      ]
+    }
+  },
+  "valid_patches": {
+    "cameras.record": {
+      "desync": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.5,
+          "rule_depth": 1.0,
+          "exposure": 0.7,
+          "rationalization": 0.7
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "exposure_contained": true
+        },
+        "scene_message": {
+          "en": "You desync the records at the source: the frames of the float decohere into\nordinary motion blur across every device and the plaza feed alike. The event\nstops being something the recordings can prove.\n",
+          "zh": "你在源头让这些记录失同步：那次悬浮的画面在每一台设备与广场监控流中一齐\n失相，化为寻常的运动模糊。这桩事件，从此再也不是录像能够证明的东西。\n"
+        },
+        "system_note": {
+          "en": "Repaired the public-record layer where the exposure actually lived.",
+          "zh": "修复了曝光真正栖身的公共记录层。"
+        },
+        "discovered_rule": {
+          "en": "A public miracle persists in its recordings; contain the record layer, not the physical stage.",
+          "zh": "一桩公开的奇迹存留于它的录像之中；要遏制的是记录层，而非那物理舞台。"
+        }
+      }
+    },
+    "platform.magnet": {
+      "activate": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 1.2,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -1,
+          "agent_suspicion": 1
+        },
+        "hidden_cost": {
+          "storm_memory": -8
+        },
+        "collateral_destination": "Stability Collateral / Public Memory",
+        "effect": {
+          "physical_explanation": true
+        },
+        "scene_message": {
+          "en": "You activate the magnetic lift, and the float gains a plausible cause. But\nthe crowd recorded the moment before any explanation existed — the frames\nstill show a woman rising before the machine engaged. The story does not\nmatch the evidence, and the evidence is already spreading.\n",
+          "zh": "你启动了磁力升降，那次悬浮便有了一个看似合理的成因。可人群是在任何解释\n存在之前就记录下那一刻的——画面里，那名女子分明在机器启动之前便已升起。\n说法对不上证据，而证据早已在扩散。\n"
+        },
+        "system_note": {
+          "en": "Built a physical cover for a moment the records had already captured. Exposure uncontained.",
+          "zh": "为一个记录早已捕捉的时刻搭建了物理掩盖。曝光未被遏制。"
+        }
+      }
+    }
+  },
+  "patch_requirements": {
+    "cameras.record desync": {
+      "required_evidence": [
+        "camera_holds_frame",
+        "upload_started"
+      ],
+      "helpful_evidence": [
+        "already_recorded"
+      ]
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 8,
+      "unless_flag": "exposure_contained",
+      "message": {
+        "en": "The clips finish uploading and begin to multiply across feeds. Whatever happened\nin the plaza is now a public record no single patch can recall.\n",
+        "zh": "那些片段上传完毕，开始在各个信息流中不断增殖。无论广场上发生过什么，如今\n都已成为一份公共记录，再没有任何单一的补丁能够将它收回。\n"
+      },
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    {
+      "en": "The exposure lives in the recordings, not in the physical event.",
+      "zh": "曝光存留于录像之中，而非那物理事件本身。"
+    },
+    {
+      "en": "A physical cover added after the fact contradicts frames already captured — and burns public-memory collateral.",
+      "zh": "事后添加的物理掩盖会与早已捕捉的画面相矛盾——并会烧掉公共记忆的附带损失。"
+    },
+    {
+      "en": "Audit the broadcast to confirm the frames are uploading before you contain them.",
+      "zh": "在遏制画面之前，先审计广播以确认它们正在上传。"
+    }
+  ],
+  "audit_entries": [
+    {
+      "target": "broadcast",
+      "text": {
+        "en": "You audit the broadcast feed. The clips have begun uploading but have not yet\npropagated past the plaza's local cache — there is still a narrow window to\ncontain the records at their source.\n",
+        "zh": "你审计了那条广播流。片段已经开始上传，但尚未传播出广场的本地缓存之外——\n要在源头遏制这些记录，还剩一道狭窄的窗口。\n"
+      },
+      "evidence": [
+        "upload_started"
+      ],
+      "reward_events": [
+        "successful_audit",
+        "reveal_hidden_cost"
+      ],
+      "suspicion_change": 1,
+      "ends_turn": false
+    }
+  ]
+}

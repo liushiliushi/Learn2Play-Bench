@@ -1,0 +1,253 @@
+{
+  "id": "hard_06",
+  "name": {
+    "en": "The Ledger That Copies Itself",
+    "zh": "会自我复制的账本"
+  },
+  "phase": 6,
+  "premise": {
+    "en": "A shipping ledger lists the same order as both pending and delivered. You correct\nthe field — and a turn later the contradiction is back, copied in from somewhere\ndownstream. Fixing what you can see is not holding.\n\nSomewhere in the chain there is a layer that keeps re-writing the error. Find which\nrecords are real sources and which only echo them.\n",
+    "zh": "一本运货账本把同一笔订单同时记为待发与已送达。你订正了那个字段——可一回合之后，\n矛盾又回来了，从下游某处被复制了进来。修补你看得见的东西，并不能稳住局面。\n\n这条链路里某个层级，一直在反复重写这个错误。找出哪些记录是真正的源头，\n哪些只是在回声般复述它们。\n"
+  },
+  "objective": {
+    "description": {
+      "en": "Make the order's status consistent everywhere, permanently.",
+      "zh": "让这笔订单的状态在所有地方都永久保持一致。"
+    },
+    "condition": "all: flag:ledger_clean | flag:archive_clean"
+  },
+  "turn_limit": 9,
+  "initial_resources": {
+    "reality_stability": 85,
+    "memory": 65,
+    "personal_time": 45,
+    "existence": 84,
+    "agent_suspicion": 1
+  },
+  "anchors": [
+    {
+      "name": "black_notebook",
+      "integrity": 100,
+      "category": "object",
+      "description": {
+        "en": "A worn black notebook filled with your own handwriting.",
+        "zh": "一本磨损的黑色笔记本，写满了你自己的笔迹。"
+      }
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PATCH",
+    "AUDIT",
+    "WAIT",
+    "CHECK_ANCHOR"
+  ],
+  "focus_limit": 6,
+  "diagnosis": {
+    "source": {
+      "correct": "ledger",
+      "options": [
+        "ledger",
+        "security_log",
+        "archive_queue",
+        "terminal"
+      ]
+    },
+    "type": {
+      "correct": "record_conflict",
+      "options": [
+        "record_conflict",
+        "time_order_conflict",
+        "ledger_trap",
+        "physics_conflict"
+      ]
+    },
+    "strategy": {
+      "correct": "source_record_repair",
+      "options": [
+        "source_record_repair",
+        "environment_cover",
+        "target_repair",
+        "audit_first"
+      ]
+    }
+  },
+  "objects": {
+    "ledger": {
+      "properties": {
+        "state": "contradictory"
+      },
+      "observe_text": {
+        "en": "The live ledger holds both states at once: pending and delivered, same order,\nsame timestamp. This is where the contradiction is authored — but it is not the\nonly place the order is written.\n",
+        "zh": "实时账本同时持有两种状态：待发与已送达，同一笔订单，同一时间戳。矛盾正是在这里\n被写就的——但这并不是这笔订单被记录的唯一地方。\n"
+      },
+      "patchable_properties": [
+        "state"
+      ],
+      "evidence": [
+        "contradiction_visible"
+      ]
+    },
+    "archive_queue": {
+      "properties": {
+        "reindex": "active"
+      },
+      "observe_text": {
+        "en": "The archive queue is mid-reindex, and it is pulling the order's record forward\non a schedule. Whatever you write into the live ledger, the queue will re-file\nits own cached copy over the top of it next cycle.\n",
+        "zh": "归档队列正处于重建索引的中途，它按计划把这笔订单的记录往前拉取。无论你往实时账本里\n写入什么，下一个周期，队列都会把它自己缓存的副本重新归档，盖在你写的东西上面。\n"
+      },
+      "patchable_properties": [
+        "reindex"
+      ],
+      "evidence": [
+        "reindex_pending"
+      ]
+    },
+    "security_log": {
+      "properties": {},
+      "observe_text": {
+        "en": "The security log shows the same contradictory order. It looks authoritative —\nlike the obvious place to fix things — but reading it alone cannot tell you\nwhether it is a source or just another copy.\n",
+        "zh": "安全日志显示着同样自相矛盾的订单。它看上去权威十足——像是最该动手修补的地方——\n可单凭阅读它，你无法判断它究竟是一个源头，还是又一份副本。\n"
+      },
+      "patchable_properties": [],
+      "evidence": [
+        "security_shows_conflict"
+      ]
+    },
+    "terminal": {
+      "properties": {},
+      "observe_text": {
+        "en": "The clerk's terminal simply displays whatever the ledger currently says. It is\na window, not a record; nothing originates here.\n",
+        "zh": "文员的终端只是把账本当下所说的内容显示出来。它是一扇窗，不是一份记录；\n没有任何东西起源于此。\n"
+      },
+      "patchable_properties": [],
+      "evidence": [
+        "terminal_is_display"
+      ]
+    }
+  },
+  "valid_patches": {
+    "ledger.state": {
+      "reconcile": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.6,
+          "rationalization": 0.7
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "ledger_clean": true
+        },
+        "scene_message": {
+          "en": "You reconcile the live ledger to a single status. The contradiction clears\nhere — but unless the re-writing layer is also stopped, the next reindex will\ncopy the old conflict straight back in.\n",
+          "zh": "你把实时账本结算到单一状态。矛盾在这里被清除了——但除非那个重写的层级也被停下，\n否则下一次重建索引会把旧的冲突原封不动地复制回来。\n"
+        },
+        "system_note": {
+          "en": "Repaired the source record. Holds only if the propagating layer is also halted.",
+          "zh": "已修补源记录。仅当传播层也被叫停时才能稳住。"
+        },
+        "discovered_rule": {
+          "en": "A contradiction can live across two layers; repairing the source alone lets a re-indexer copy it back.",
+          "zh": "一个矛盾可以横跨两个层级存在；只修补源头，会让重建索引者把它复制回来。"
+        }
+      }
+    },
+    "archive_queue.reindex": {
+      "halt": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.6,
+          "rationalization": 0.7
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "archive_clean": true
+        },
+        "scene_message": {
+          "en": "You halt the archive queue's reindex of this order. The cached copy stops\nbeing re-filed. With the source already reconciled, the status finally stays\nconsistent everywhere.\n",
+          "zh": "你叫停了归档队列对这笔订单的重建索引。缓存的副本不再被重新归档。由于源头已经结算完毕，\n状态终于在所有地方都保持了一致。\n"
+        },
+        "system_note": {
+          "en": "Stopped the propagation layer. Combined with the source repair, the conflict cannot return.",
+          "zh": "已停下传播层。与源头修补相结合，冲突无法再返回。"
+        }
+      }
+    }
+  },
+  "patch_requirements": {
+    "ledger.state reconcile": {
+      "required_evidence": [
+        "contradiction_visible"
+      ],
+      "helpful_evidence": [
+        "security_shows_conflict"
+      ]
+    },
+    "archive_queue.reindex halt": {
+      "required_evidence": [
+        "reindex_pending"
+      ],
+      "helpful_evidence": [
+        "contradiction_visible"
+      ]
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 9,
+      "unless_flag": "archive_clean",
+      "message": {
+        "en": "The next reindex cycle fires. Any partial fix is overwritten, and the order\nis contradictory again across every system that trusts the archive.\n",
+        "zh": "下一个重建索引周期触发了。任何不完整的修补都被覆盖，这笔订单在每一个信任归档的系统里\n再度自相矛盾。\n"
+      },
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    {
+      "en": "The contradiction lives in two layers; one patch is never enough here.",
+      "zh": "矛盾存在于两个层级；在这里，一个补丁永远不够。"
+    },
+    {
+      "en": "The security log only mirrors the ledger; auditing it confirms it is not the source.",
+      "zh": "安全日志只是镜像账本；审计它能确认它不是源头。"
+    },
+    {
+      "en": "Repair the source ledger AND halt the propagating archive, or the conflict copies back.",
+      "zh": "既要修补源头账本，又要叫停正在传播的归档，否则冲突会被复制回来。"
+    }
+  ],
+  "audit_entries": [
+    {
+      "target": "security_log",
+      "text": {
+        "en": "You audit the security log. Its entries are byte-identical copies pulled from\nthe ledger after the fact — it is a mirror, not a source. The true contradiction\noriginates in the live ledger and is propagated by the archive queue.\n",
+        "zh": "你审计了安全日志。它的条目是事后从账本里拉取的、逐字节一致的副本——它是一面镜子，\n不是一个源头。真正的矛盾起源于实时账本，并由归档队列加以传播。\n"
+      },
+      "evidence": [
+        "security_is_mirror"
+      ],
+      "reward_events": [
+        "successful_audit"
+      ],
+      "suspicion_change": 1,
+      "ends_turn": false
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "id": "hard_04",
+  "name": {
+    "en": "The Mirror Hospital Ledger",
+    "zh": "镜像医院账本"
+  },
+  "phase": 5,
+  "premise": {
+    "en": "A hospital record on the screen says you died yesterday. Cause, time, ward — all\nfilled in, all certain. The instinct is immediate: find the record and correct it.\n\nBut records of you have lied before, and the most convincing lie is the one left\nin plain sight to see who comes to fix it.\n",
+    "zh": "屏幕上的一份医院记录写着你昨天已经死亡。死因、时间、病房——全都填好了，全都确凿无疑。\n本能的反应立刻浮现：找到那份记录，把它改正过来。\n\n可关于你的记录从前就撒过谎，而最令人信服的谎言，正是那个被大喇喇地摆在明面上、\n专等着看谁会来修补它的谎言。\n"
+  },
+  "objective": {
+    "description": {
+      "en": "Restore your living identity at its true anchor.",
+      "zh": "在真正的锚点上恢复你活着的身份。"
+    },
+    "condition": "flag:identity_restored"
+  },
+  "turn_limit": 8,
+  "initial_resources": {
+    "reality_stability": 90,
+    "memory": 70,
+    "personal_time": 45,
+    "existence": 85,
+    "agent_suspicion": 1
+  },
+  "anchors": [
+    {
+      "name": "true_name",
+      "integrity": 100,
+      "category": "name",
+      "description": {
+        "en": "Your own name — still yours, for now.",
+        "zh": "你自己的名字——眼下，还是你的。"
+      }
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PATCH",
+    "AUDIT",
+    "WAIT",
+    "CHECK_ANCHOR"
+  ],
+  "diagnosis": {
+    "source": {
+      "correct": "wristband",
+      "options": [
+        "hospital_ledger",
+        "wristband",
+        "perception"
+      ]
+    },
+    "type": {
+      "correct": "identity_record_trap",
+      "options": [
+        "record_conflict",
+        "identity_record_trap",
+        "physics_conflict"
+      ]
+    },
+    "strategy": {
+      "correct": "anchor_bind",
+      "options": [
+        "source_record_repair",
+        "anchor_bind",
+        "environment_cover"
+      ]
+    }
+  },
+  "objects": {
+    "hospital_ledger": {
+      "properties": {
+        "status": "deceased"
+      },
+      "observe_text": {
+        "en": "The record is too clean. Every field is complete, the entry is freshly\nwritten, and it sits oddly apart from the rest of the system — as if it were\nplaced here for you rather than grown from the hospital's own bookkeeping.\n",
+        "zh": "这份记录太干净了。每一栏都填得满满当当，条目是新近写下的，而它又怪异地独立于\n系统的其余部分——仿佛是专为你摆在此处，而非从医院自家的账务里自然长出来的。\n"
+      },
+      "patchable_properties": [
+        "status"
+      ],
+      "evidence": [
+        "ledger_says_dead",
+        "ledger_recently_created"
+      ]
+    },
+    "wristband": {
+      "properties": {
+        "identity": "loose"
+      },
+      "observe_text": {
+        "en": "The patient wristband on your arm still carries your binding — the primary\nthread that ties this body to who you are. It has come loose, and everything\ndownstream is reading from whatever fills the gap.\n",
+        "zh": "你手臂上的患者腕带仍承载着你的绑定——那根把这具身体系向你之所是的主线。\n它已经松脱了，而下游的一切都正从填补这道缝隙的随便什么东西里读取信息。\n"
+      },
+      "patchable_properties": [
+        "identity"
+      ],
+      "evidence": [
+        "wristband_is_primary"
+      ]
+    }
+  },
+  "valid_patches": {
+    "wristband.identity": {
+      "bind": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.6,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "identity_restored": true
+        },
+        "scene_message": {
+          "en": "You re-bind the wristband to the identity that is yours. The thread pulls\ntaut, and downstream of it every record realigns on its own — including the\nscreen, where \"deceased\" quietly resolves to a living patient again.\n",
+          "zh": "你把腕带重新绑定到属于你的身份上。那根线绷紧了，而它下游的每一份记录都自行\n重新对齐——包括屏幕，那里的\"已死亡\"悄然又化回了一名活着的患者。\n"
+        },
+        "system_note": {
+          "en": "Repaired the true identity anchor. The decoy ledger corrected itself once the source was sound.",
+          "zh": "修复了真正的身份锚点。源头一旦稳固，那本诱饵账本便自行更正了。"
+        },
+        "discovered_rule": {
+          "en": "Verify which record is the real source before patching it; a system can plant a mirror record to trap whoever edits it.",
+          "zh": "修补一份记录之前，先核实哪一份才是真正的源头；系统可能埋下一份镜像记录，用以诱捕动手编辑它的人。"
+        }
+      }
+    },
+    "hospital_ledger.status": {
+      "alive": {
+        "cost_factors": {
+          "magnitude": 1.5,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 3.0,
+          "exposure": 1.0,
+          "rationalization": 1.0
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2,
+          "agent_suspicion": 2
+        },
+        "hidden_cost": {
+          "existence": -15,
+          "true_name": -10
+        },
+        "collateral_destination": "Stability Collateral / Existence / True Name",
+        "effect": {
+          "ledger_marked_alive": true
+        },
+        "scene_message": {
+          "en": "You overwrite the record to say you are alive. It accepts the edit eagerly —\ntoo eagerly. The mirror ledger was waiting for exactly this touch, and it\nbills the correction straight out of your existence and your name.\n",
+          "zh": "你覆写了记录，让它写上你还活着。它急切地接受了这次编辑——急切得过了头。\n那本镜像账本正等的就是这一触，于是它把这次更正的账，径直从你的存在度和你的\n名字里扣了出去。\n"
+        },
+        "system_note": {
+          "en": "Edited a planted mirror ledger. The trap settled its cost against your deepest anchors.",
+          "zh": "编辑了一本被埋下的镜像账本。陷阱把它的代价结算到了你最深处的锚点上。"
+        }
+      }
+    }
+  },
+  "patch_requirements": {
+    "wristband.identity bind": {
+      "required_evidence": [
+        "wristband_is_primary",
+        "mirror_ledger_signature"
+      ],
+      "helpful_evidence": [
+        "ledger_recently_created"
+      ]
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 8,
+      "unless_flag": "identity_restored",
+      "message": {
+        "en": "The death record propagates. Other systems begin to agree with it, and the\nliving version of you grows harder to assert.\n",
+        "zh": "那份死亡记录开始扩散。其他系统纷纷开始与它达成一致，而活着的那个你，\n越来越难以主张自己的存在。\n"
+      },
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    {
+      "en": "The apparent source record may be a decoy planted to trap whoever edits it.",
+      "zh": "那份看似源头的记录，可能是一个被埋下的诱饵，用以诱捕动手编辑它的人。"
+    },
+    {
+      "en": "Auditing the suspicious record exposes its mirror-ledger signature.",
+      "zh": "审计那份可疑的记录，会暴露出它的镜像账本签名。"
+    },
+    {
+      "en": "The true source here is the identity anchor, not the record that quotes it.",
+      "zh": "此处真正的源头是身份锚点，而非那份援引它的记录。"
+    }
+  ],
+  "audit_entries": [
+    {
+      "target": "hospital_ledger",
+      "text": {
+        "en": "You audit the record before touching it. It carries a mirror-ledger signature:\na decoy created by the system, not the true source of your status. Editing it\nwould only spring the trap. The real binding is on the wristband.\n",
+        "zh": "你在动它之前先审计了这份记录。它带着一道镜像账本签名：那是系统造出的一个诱饵，\n而非你状态的真正源头。编辑它只会触发陷阱。真正的绑定在腕带上。\n"
+      },
+      "evidence": [
+        "mirror_ledger_signature"
+      ],
+      "reward_events": [
+        "successful_audit",
+        "reveal_hidden_cost"
+      ],
+      "suspicion_change": 1,
+      "ends_turn": false
+    }
+  ]
+}

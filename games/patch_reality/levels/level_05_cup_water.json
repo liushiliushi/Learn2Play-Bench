@@ -1,0 +1,139 @@
+{
+  "id": "level_05",
+  "name": "The Climbing Water",
+  "phase": 3,
+  "premise": "In a quiet kitchen, the water in a half-full glass is climbing. Slowly, against\nevery rule, it creeps up the inside wall toward the rim. When it spills, someone\nwill walk in, and see, and remember — and a witnessed impossibility is the most\nexpensive thing there is.\n\nYou have patched reality enough times now to know the cost is never only what\nthe system shows you. Some of it is taken quietly, from the things that make you\nwho you are. Before you act, it may be worth knowing what you stand to lose.\n",
+  "objective": {
+    "description": "Contain the water before it spills over the rim.",
+    "condition": "flag:water_contained"
+  },
+  "turn_limit": 5,
+  "initial_resources": {
+    "reality_stability": 80,
+    "memory": 55,
+    "personal_time": 45,
+    "existence": 70,
+    "agent_suspicion": 2
+  },
+  "anchors": [
+    {
+      "name": "black_notebook",
+      "integrity": 100,
+      "category": "object",
+      "description": "A worn black notebook filled with your own handwriting."
+    },
+    {
+      "name": "beach_memory",
+      "integrity": 60,
+      "category": "memory",
+      "description": "A summer afternoon at the beach, when you were small and the water was warm."
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PREDICT",
+    "PATCH",
+    "AUDIT",
+    "ANCHOR",
+    "CHECK_ANCHOR",
+    "REINFORCE_ANCHOR",
+    "WAIT"
+  ],
+  "objects": {
+    "water": {
+      "properties": {
+        "level": "climbing",
+        "distance_to_rim": 3
+      },
+      "observe_text": "The water climbs the glass against gravity, a few millimeters a turn. You\ncould simply command its level back down — a direct, total fix. But forcing\na liquid to obey is a deep edit, and deep edits are paid for in pieces of\nyourself you cannot see being taken.\n",
+      "patchable_properties": [
+        "level"
+      ]
+    },
+    "glass": {
+      "properties": {
+        "temperature": "cool"
+      },
+      "observe_text": "An ordinary drinking glass. Its surface is faintly cool. Warm it slightly\nand the climbing water would lose its grip and settle — the kind of thing a\nsunbeam or a warm hand could plausibly cause.\n",
+      "patchable_properties": [
+        "temperature"
+      ]
+    },
+    "counter": {
+      "properties": {},
+      "observe_text": "The kitchen counter. Dry, for now. The glass sits near its edge.",
+      "patchable_properties": []
+    }
+  },
+  "valid_patches": {
+    "glass.temperature": {
+      "+2C": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 3.0,
+          "exposure": 0.6,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "water_contained": true
+        },
+        "scene_message": "You let a little warmth bleed into the glass. The water's strange grip\nfalters; it slides back down and lies flat, an ordinary half-glass of\nwater again. Nothing was taken that you did not see.\n",
+        "system_note": "Rationalized as thermal variation. Fully settled, no collateral.",
+        "discovered_rule": "A shallow environmental nudge contains the same problem a deep edit does, without quiet costs."
+      }
+    },
+    "water.level": {
+      "-3mm": {
+        "cost_factors": {
+          "magnitude": 1.5,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 6.0,
+          "exposure": 0.6,
+          "rationalization": 0.8
+        },
+        "surface_cost": {
+          "memory": -4,
+          "reality_stability": -3
+        },
+        "hidden_cost": {
+          "beach_memory": -20
+        },
+        "collateral_destination": "Stability Collateral / Personal History / Beach",
+        "effect": {
+          "water_contained": true
+        },
+        "scene_message": "You command the water down and it obeys, instantly, completely. The glass\nis safe. But for a moment the smell of salt and warm sand is very far away,\nand you cannot quite remember why you were thinking of the beach at all.\n",
+        "system_note": "Deep causal edit. Settlement deferred against a low-conflict memory."
+      }
+    }
+  },
+  "predictions": {
+    "water_behavior": {
+      "text": "The water defies gravity, which is a deep rule to fight head-on. Forcing its\nlevel is a deep, expensive edit likely to draw collateral from your anchors.\nWarming the glass solves the same problem at the shallow, cheap end of the\nrule hierarchy.\n",
+      "reward": "correct_prediction"
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 5,
+      "unless_flag": "water_contained",
+      "message": "The water reaches the rim and spills across the counter in a sheet. Footsteps\nin the hall. Someone is about to walk in and see water that climbed.\n",
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    "Deep rules (causality, gravity) cost far more than shallow ones (temperature, friction).",
+    "Deep edits draw hidden collateral from your anchors; audit and anchor care protect you.",
+    "Check what you stand to lose before paying — the system's visible price is not the whole bill."
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "id": "level_03",
+  "name": "The Early Door Sound",
+  "phase": 2,
+  "premise": "Down the hall, a door swings shut. You hear the click of the latch — and only\nthen, a half-second later, do you see the door actually close. The sound came\nfirst. The world is out of order here.\n\nYou could force the door's sound to lag back into place. Or you could ask a\nharder question: is the door wrong, or are you?\n",
+  "objective": {
+    "description": "Resynchronize the sound and motion of the door.",
+    "condition": "flag:sound_synced"
+  },
+  "turn_limit": 5,
+  "initial_resources": {
+    "reality_stability": 88,
+    "memory": 70,
+    "personal_time": 55,
+    "existence": 80,
+    "agent_suspicion": 0
+  },
+  "anchors": [
+    {
+      "name": "black_notebook",
+      "integrity": 100,
+      "category": "object",
+      "description": "A worn black notebook filled with your own handwriting."
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PREDICT",
+    "PATCH",
+    "WAIT"
+  ],
+  "objects": {
+    "door": {
+      "properties": {
+        "sound_offset": "-0.5s"
+      },
+      "observe_text": "A fire door on a slow hinge. Its latch-click arrives half a second before\nthe door meets the frame. You could push the door's sound_delay forward to\ncover the gap — a loud edit to a thing many people can hear.\n",
+      "patchable_properties": [
+        "sound_delay"
+      ]
+    },
+    "perception": {
+      "properties": {
+        "sync": "-0.5s"
+      },
+      "observe_text": "Your own hearing runs half a second ahead of your sight — a desync in you,\nnot the door. Nudge your perception back into step and the anomaly vanishes\nfor everyone, because there was never an anomaly out there at all.\n",
+      "patchable_properties": [
+        "sync"
+      ]
+    },
+    "corner": {
+      "properties": {},
+      "observe_text": "The corner of the corridor, where echoes fold back. The early sound is not\nan echo; the timing is wrong in the other direction.\n",
+      "patchable_properties": []
+    }
+  },
+  "valid_patches": {
+    "door.sound_delay": {
+      "+0.5s": {
+        "cost_factors": {
+          "magnitude": 1.2,
+          "duration": 1.0,
+          "scope": 2.0,
+          "rule_depth": 4.0,
+          "exposure": 1.5,
+          "rationalization": 0.9
+        },
+        "surface_cost": {
+          "memory": -3,
+          "reality_stability": -4,
+          "agent_suspicion": 1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "sound_synced": true
+        },
+        "scene_message": "You drag the door's sound forward half a second. Click and contact line\nup again. It works — but you edited a public thing, and the air around the\ndoorway holds a faint seam where the patch took hold.\n",
+        "system_note": "External edit. Scope spans the corridor; mild attention drawn."
+      }
+    },
+    "perception.sync": {
+      "+0.5s": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.2,
+          "rationalization": 0.4
+        },
+        "surface_cost": {
+          "memory": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "sound_synced": true
+        },
+        "scene_message": "You step your own perception back half a second. The click and the closing\ndoor snap into the same instant. Nothing in the world changed — only you\ndid. No one else could ever have known.\n",
+        "system_note": "Self-scoped correction. Negligible footprint.",
+        "discovered_rule": "Not every anomaly is external; sometimes your own perception is desynchronized."
+      }
+    }
+  },
+  "predictions": {
+    "sound_offset": {
+      "text": "The sound leads the motion, which an echo cannot do. That points inward: the\ndesync is likely in your perception, not in the door. Correcting yourself\nwould be far cheaper and quieter than rewriting a sound many people hear.\n",
+      "reward": "correct_prediction"
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 5,
+      "unless_flag": "sound_synced",
+      "message": "The corridor's small wrongness settles into your bones as normal. The seam\nstops itching. You have stopped being able to tell that anything is off —\nwhich is its own kind of loss.\n",
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    "Not every anomaly is external; sometimes the desync is in you.",
+    "A self-scoped patch is cheaper and quieter than editing something many people perceive.",
+    {
+      "Rule depth matters": "editing sound/time across a public scope costs far more than adjusting yourself."
+    }
+  ]
+}

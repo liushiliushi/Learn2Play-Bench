@@ -1,0 +1,194 @@
+{
+  "id": "level_06",
+  "name": "The Elevator That Arrives Twice",
+  "phase": 3,
+  "premise": "The lobby elevator opens with a polite chime. At the same time, the indicator\nabove the same door insists the car is still descending from floor 9. A courier\nsteps toward the open car, ready to become a witness to two arrivals at once.\n",
+  "objective": {
+    "description": "Stop the duplicate elevator arrival from being witnessed.",
+    "condition": "flag:elevator_coherent"
+  },
+  "turn_limit": 5,
+  "initial_resources": {
+    "reality_stability": 78,
+    "memory": 58,
+    "personal_time": 42,
+    "existence": 70,
+    "agent_suspicion": 3
+  },
+  "anchors": [
+    {
+      "name": "black_notebook",
+      "integrity": 100,
+      "category": "object",
+      "description": "A worn black notebook filled with your own handwriting."
+    },
+    {
+      "name": "commute_memory",
+      "integrity": 70,
+      "category": "memory",
+      "description": "The ordinary rhythm of waiting for elevators in office lobbies."
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PREDICT",
+    "PATCH",
+    "AUDIT",
+    "CHECK_ANCHOR",
+    "REINFORCE_ANCHOR",
+    "WAIT"
+  ],
+  "objects": {
+    "elevator": {
+      "properties": {
+        "doors": "open"
+      },
+      "observe_text": "The elevator is physically here with doors open. Closing the doors would\nstop the courier entering, but it would not explain why the same car was\nalso still descending.\n",
+      "patchable_properties": [
+        "doors"
+      ]
+    },
+    "indicator": {
+      "properties": {
+        "floor": 9
+      },
+      "observe_text": "The indicator shows floor 9 and a downward arrow. Patching the display\nwould hide the symptom from the lobby, but not fix the route record behind\nit.\n",
+      "patchable_properties": [
+        "floor"
+      ]
+    },
+    "dispatch": {
+      "properties": {
+        "ledger": "duplicated"
+      },
+      "observe_text": "The dispatch panel has split one car into two records: one arrived, one\ndescending. Correct the call ledger and the visible facts can reconcile.\n",
+      "patchable_properties": [
+        "ledger"
+      ]
+    },
+    "courier": {
+      "properties": {
+        "attention": "entering"
+      },
+      "observe_text": "The courier is one step from entering. A brief delay buys time, but the\ncontradiction still needs a causal repair.\n",
+      "patchable_properties": [
+        "pace"
+      ]
+    }
+  },
+  "valid_patches": {
+    "dispatch.ledger": {
+      "coherent": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 3.0,
+          "exposure": 0.9,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "elevator_coherent": true
+        },
+        "scene_message": "You merge the two dispatch records into one route. The indicator blinks,\naccepts the lobby arrival, and the courier sees only a normal elevator.\n",
+        "system_note": "Source bookkeeping repair. Visible scene rationalizes itself.",
+        "discovered_rule": "Fix low-level bookkeeping before editing the public symptom."
+      }
+    },
+    "indicator.floor": {
+      "lobby": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 1.2,
+          "rationalization": 0.7
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -3,
+          "agent_suspicion": 1
+        },
+        "hidden_cost": {
+          "commute_memory": -4
+        },
+        "collateral_destination": "Stability Collateral / Routine Memory",
+        "effect": {
+          "elevator_coherent": true
+        },
+        "scene_message": "The indicator flips to L. The contradiction is hidden at the panel, but\nthe dispatch record strains underneath it.\n",
+        "system_note": "Symptom edit. Coherent enough for witnesses, but collateral settles later."
+      }
+    },
+    "elevator.doors": {
+      "close": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 1.4,
+          "rationalization": 0.8
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -2,
+          "agent_suspicion": 1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "courier_delayed": true
+        },
+        "scene_message": "The doors slide shut before the courier enters. The witness is delayed,\nbut the panel still says the car is elsewhere.\n",
+        "system_note": "Delay only. The duplicate-arrival contradiction remains unresolved."
+      }
+    },
+    "courier.pace": {
+      "hesitate": {
+        "cost_factors": {
+          "magnitude": 0.8,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.8,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "courier_delayed": true
+        },
+        "scene_message": "The courier checks a notification and pauses for a breath.",
+        "system_note": "Buys time without solving the source inconsistency."
+      }
+    }
+  },
+  "predictions": {
+    "duplicate_arrival": {
+      "text": "The door and indicator disagree because the dispatch ledger duplicated a\ncar route. Fixing the route record is quieter than forcing doors or displays.\n",
+      "reward": "correct_prediction"
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 5,
+      "unless_flag": "elevator_coherent",
+      "message": "The courier steps into the open elevator while the indicator still counts\ndown from 9. Their certainty locks the contradiction in place.\n",
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    "Repair source bookkeeping before public symptoms when records disagree.",
+    "Delaying a witness helps only if the causal contradiction is also resolved."
+  ]
+}

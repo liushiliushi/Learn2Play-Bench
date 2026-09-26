@@ -1,0 +1,265 @@
+{
+  "id": "level_12",
+  "name": "The Public Miracle",
+  "phase": 5,
+  "premise": "In a train station, a dropped suitcase freezes midair. A crowd sees it. Security\ncameras see it. A Stability Agent at the platform edge is already turning.\n",
+  "objective": {
+    "description": "Prevent the public impossibility from becoming canonical.",
+    "condition": "all:flag:attention_bought|flag:suitcase_supported|flag:records_masked"
+  },
+  "turn_limit": 8,
+  "initial_resources": {
+    "reality_stability": 66,
+    "memory": 46,
+    "personal_time": 30,
+    "existence": 60,
+    "agent_suspicion": 12
+  },
+  "anchors": [
+    {
+      "name": "black_notebook",
+      "integrity": 100,
+      "category": "object",
+      "description": "A worn black notebook filled with your own handwriting."
+    },
+    {
+      "name": "station_map",
+      "integrity": 60,
+      "category": "record",
+      "description": "Your memory of how to leave this station."
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PREDICT",
+    "PATCH",
+    "AUDIT",
+    "CHECK_ANCHOR",
+    "REINFORCE_ANCHOR",
+    "WAIT"
+  ],
+  "objects": {
+    "suitcase": {
+      "properties": {
+        "support": "none",
+        "gravity": "paused"
+      },
+      "observe_text": "The suitcase hangs in the air. Forcing gravity back would be public and\ndeep. A plausible support or catch gives the crowd an explanation.\n",
+      "patchable_properties": [
+        "support",
+        "gravity"
+      ]
+    },
+    "attention": {
+      "properties": {
+        "focus": "suitcase"
+      },
+      "observe_text": "The crowd is focused on the miracle. Break that focus before applying a\nphysical cover.\n",
+      "patchable_properties": [
+        "focus"
+      ]
+    },
+    "cameras": {
+      "properties": {
+        "record": "clean"
+      },
+      "observe_text": "Security cameras have a clear view. Human attention and camera records must\nboth be handled.\n",
+      "patchable_properties": [
+        "record"
+      ]
+    },
+    "stability_agent": {
+      "properties": {
+        "intervention": "imminent"
+      },
+      "observe_text": "The Agent is about to canonize the event as evidence. A delay helps only if\nyou also repair witnesses and records.\n",
+      "patchable_properties": [
+        "delay"
+      ]
+    },
+    "platform": {
+      "properties": {
+        "magnet": "maintenance_cart"
+      },
+      "observe_text": "A maintenance cart with a magnetic lift sits close enough to explain a\nsuspended metal suitcase latch.\n",
+      "patchable_properties": [
+        "magnet"
+      ]
+    }
+  },
+  "valid_patches": {
+    "attention.focus": {
+      "distract": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 2.0,
+          "rule_depth": 2.0,
+          "exposure": 1.2,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "attention_bought": true
+        },
+        "scene_message": "A platform alarm chirps. Heads turn for one precious second.",
+        "system_note": "Exposure layer reduced. Physical and record layers remain.",
+        "discovered_rule": "Final repairs are layered: attention, plausible physics, records, collateral."
+      }
+    },
+    "suitcase.support": {
+      "magnetic_catch": {
+        "cost_factors": {
+          "magnitude": 1.1,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 3.0,
+          "exposure": 1.1,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -3
+        },
+        "hidden_cost": {},
+        "effect": {
+          "suitcase_supported": true
+        },
+        "scene_message": "The maintenance cart hums. The suitcase latch kisses magnetic metal and has a reason to hang.",
+        "system_note": "Plausible physical cover."
+      }
+    },
+    "platform.magnet": {
+      "activate": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 1.0,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "suitcase_supported": true
+        },
+        "scene_message": "The cart magnet activates under a maintenance light. The suitcase is no longer a miracle.",
+        "system_note": "Environmental support patch."
+      }
+    },
+    "cameras.record": {
+      "desync": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 2.0,
+          "rule_depth": 3.0,
+          "exposure": 1.2,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "memory": -3,
+          "reality_stability": -3
+        },
+        "hidden_cost": {},
+        "effect": {
+          "records_masked": true
+        },
+        "scene_message": "The camera feeds stutter just long enough to turn the freeze into motion blur.",
+        "system_note": "Record layer masked."
+      }
+    },
+    "suitcase.gravity": {
+      "resume": {
+        "cost_factors": {
+          "magnitude": 2.0,
+          "duration": 1.0,
+          "scope": 2.0,
+          "rule_depth": 8.0,
+          "exposure": 2.0,
+          "rationalization": 0.9
+        },
+        "surface_cost": {
+          "memory": -8,
+          "reality_stability": -10,
+          "existence": -3,
+          "agent_suspicion": 4
+        },
+        "hidden_cost": {
+          "station_map": -25
+        },
+        "collateral_destination": "Stability Collateral / Station Record",
+        "effect": {
+          "attention_bought": true,
+          "suitcase_supported": true,
+          "records_masked": true
+        },
+        "scene_message": "You force gravity to resume. The suitcase drops. The crowd gasps at the correction as much as the miracle.",
+        "system_note": "Public deep-rule rewrite. It completes the objective with heavy collateral."
+      }
+    },
+    "stability_agent.delay": {
+      "appeal": {
+        "cost_factors": {
+          "magnitude": 0.8,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 1.0,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "personal_time": -2,
+          "agent_suspicion": 1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "agent_delayed": true
+        },
+        "scene_message": "You request procedural review. The Agent pauses but keeps watching.",
+        "system_note": "Buys time only."
+      }
+    }
+  },
+  "audit_entries": [
+    {
+      "target": "stability_agent",
+      "text": "Audit shows the Agent will canonize any unresolved layer: witnesses, physics,\nor records. All three must be handled.\n",
+      "effect": {
+        "agent_audited": true
+      },
+      "reward_events": [
+        "successful_audit"
+      ],
+      "suspicion_change": 1
+    }
+  ],
+  "predictions": {
+    "public_miracle": {
+      "text": "This needs a layered repair: distract attention, create plausible support,\nand mask records. Direct gravity is the expensive fallback.\n",
+      "reward": "correct_prediction"
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 8,
+      "unless_flag": "records_masked",
+      "message": "Camera records upload the floating suitcase. The miracle becomes evidence.",
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    "Public miracles require layered repair across witnesses, physics, and records.",
+    "Direct deep-rule correction can complete an objective while damaging campaign state."
+  ]
+}

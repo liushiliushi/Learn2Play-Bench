@@ -1,0 +1,228 @@
+{
+  "id": "hard_03",
+  "name": {
+    "en": "The Flickering Key",
+    "zh": "闪烁的钥匙"
+  },
+  "phase": 5,
+  "premise": {
+    "en": "A house key lies on the desk, flickering between two versions of itself — brass\nthen steel, long-toothed then short, a few times a second. Each flicker it spends\na little longer on the version that is not yours.\n\nReaching into an object directly is the move you have learned to distrust. But the\nflicker is not waiting for you to grow comfortable.\n",
+    "zh": "一把房门钥匙躺在桌上，在它自己的两个版本之间闪烁——一会儿黄铜、一会儿钢，\n一会儿齿长、一会儿齿短，每秒变换好几次。每一次闪烁，它都在那个不属于你的版本上\n停留得稍久一些。\n\n直接伸手探入一个物体，是你已经学会去怀疑的做法。可这闪烁并不会等到你感到安心\n的那一刻。\n"
+  },
+  "objective": {
+    "description": {
+      "en": "Resolve the key into its correct, single state.",
+      "zh": "将钥匙稳定为它正确的、唯一的状态。"
+    },
+    "condition": "flag:key_stable"
+  },
+  "turn_limit": 8,
+  "initial_resources": {
+    "reality_stability": 90,
+    "memory": 70,
+    "personal_time": 45,
+    "existence": 88,
+    "agent_suspicion": 0
+  },
+  "anchors": [
+    {
+      "name": "true_name",
+      "integrity": 100,
+      "category": "name",
+      "description": {
+        "en": "Your own name, the one that is actually yours.",
+        "zh": "你自己的名字，那个真正属于你的名字。"
+      }
+    },
+    {
+      "name": "home_address",
+      "integrity": 100,
+      "category": "place",
+      "description": {
+        "en": "The address that is your home — the door this key is supposed to open.",
+        "zh": "那个作为你家的地址——这把钥匙本应打开的那扇门。"
+      }
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PATCH",
+    "AUDIT",
+    "WAIT",
+    "CHECK_ANCHOR"
+  ],
+  "diagnosis": {
+    "source": {
+      "correct": "object",
+      "options": [
+        "object",
+        "environment",
+        "witness_memory"
+      ]
+    },
+    "type": {
+      "correct": "physics_conflict",
+      "options": [
+        "physics_conflict",
+        "record_conflict",
+        "identity_record_trap"
+      ]
+    },
+    "strategy": {
+      "correct": "target_repair",
+      "options": [
+        "environment_cover",
+        "target_repair",
+        "witness_management"
+      ]
+    }
+  },
+  "objects": {
+    "key": {
+      "properties": {
+        "state": "bistable"
+      },
+      "observe_text": {
+        "en": "The key cannot decide what it is. It holds neither state — it oscillates, and\nthe oscillation is widening. The instability is in the key itself, not in\nanything around it.\n",
+        "zh": "钥匙拿不定主意自己究竟是什么。它哪个状态都守不住——它在振荡，而且振荡的幅度\n正在变大。这不稳定就在钥匙本身之中，而不在它周围的任何东西里。\n"
+      },
+      "patchable_properties": [
+        "state"
+      ],
+      "evidence": [
+        "state_bistable",
+        "spreading_risk"
+      ]
+    },
+    "lighting": {
+      "properties": {
+        "angle": "steady"
+      },
+      "observe_text": {
+        "en": "The desk lamp is steady and even. The flicker is not a trick of light or\nshadow — the key changes the same way in full glare as in dimness.\n",
+        "zh": "台灯稳定而均匀。这闪烁并不是光影的把戏——无论是在刺眼的强光下，还是在昏暗里，\n钥匙都以同样的方式变换。\n"
+      },
+      "patchable_properties": [
+        "angle"
+      ],
+      "evidence": [
+        "lighting_stable"
+      ]
+    },
+    "door_lock": {
+      "properties": {},
+      "observe_text": {
+        "en": "The lock on your door has begun to stutter in time with the key, its tumblers\nhalf-shifting toward the wrong shape. Whatever the key settles into, the lock —\nand the address it guards — will follow.\n",
+        "zh": "你门上的锁开始与钥匙同步地抽搐起来，锁芯的弹子半移向错误的形状。无论钥匙最终\n定成什么样，那把锁——以及它所守护的地址——都会随之而去。\n"
+      },
+      "patchable_properties": [],
+      "evidence": [
+        "lock_coupled_to_key"
+      ]
+    }
+  },
+  "valid_patches": {
+    "key.state": {
+      "solidify": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.7,
+          "rationalization": 0.7
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "key_stable": true
+        },
+        "scene_message": {
+          "en": "You take hold of the key's own state and solidify it onto the version that\nis yours. The flicker stops at once. The door lock steadies a breath later,\nthe wrong shape draining out of it before it could set.\n",
+          "zh": "你抓住钥匙自身的状态，把它固定到属于你的那个版本上。闪烁立刻停了下来。一口气\n之后门锁也稳定了，那个错误的形状在它定型之前便从中流走。\n"
+        },
+        "system_note": {
+          "en": "Direct stabilization at the true source. The instability was the object's own; fixing it there contained it.",
+          "zh": "在真正的源头处直接稳定。这不稳定本就是物体自身的；在那里修补便将它遏制住了。"
+        },
+        "discovered_rule": {
+          "en": "When the fault is the object itself and it is about to spread, patch the target directly — the indirect routes only buy the corruption time.",
+          "zh": "当故障就是物体本身、且即将扩散时，直接对目标打补丁——那些间接的路线只会为腐坏争取时间。"
+        }
+      }
+    },
+    "lighting.angle": {
+      "soften": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.6,
+          "rationalization": 0.8
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -1
+        },
+        "hidden_cost": {
+          "home_address": -12
+        },
+        "collateral_destination": "Stability Collateral / Home Identity",
+        "effect": {
+          "lighting_adjusted": true
+        },
+        "scene_message": {
+          "en": "You soften the light, hoping to make the flicker read as a trick of shadow.\nThe key keeps changing. With nothing fixed at the source, the wrong state\nbleeds further into the lock and the address it answers to.\n",
+          "zh": "你把灯光调柔，指望让这闪烁看上去像是阴影的把戏。钥匙却继续变换。源头处什么也\n没被固定，错误的状态便进一步渗入那把锁，以及它所对应的那个地址。\n"
+        },
+        "system_note": {
+          "en": "Cosmetic environment patch over an object fault. The corruption kept spreading toward your anchors.",
+          "zh": "在物体故障之上做了一层装点门面的环境补丁。腐坏继续朝着你的锚点蔓延。"
+        }
+      }
+    }
+  },
+  "patch_requirements": {
+    "key.state solidify": {
+      "required_evidence": [
+        "state_bistable",
+        "lighting_stable"
+      ],
+      "helpful_evidence": [
+        "lock_coupled_to_key"
+      ]
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 8,
+      "unless_flag": "key_stable",
+      "message": {
+        "en": "The key locks onto the version that is not yours. The door lock follows it,\ntumblers reshaping for an address that was never your home.\n",
+        "zh": "钥匙锁定在那个不属于你的版本上。门锁随之而去，锁芯弹子重新塑形，去匹配一个\n从来都不是你家的地址。\n"
+      },
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    {
+      "en": "Never-patch-the-target is a heuristic, not a law; sometimes the object is the source.",
+      "zh": "“永远不要给目标打补丁”是一条经验法则，而非定律；有时物体本身就是源头。"
+    },
+    {
+      "en": "Ruling out the environment is what tells you the fault is local to the object.",
+      "zh": "排除环境的嫌疑，正是这一步告诉你故障局限于物体本身。"
+    },
+    {
+      "en": "Indirect patches over a spreading object-fault leak the corruption into your anchors.",
+      "zh": "在一个正在扩散的物体故障之上做间接补丁，会让腐坏泄入你的锚点。"
+    }
+  ],
+  "audit_entries": []
+}

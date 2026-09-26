@@ -1,0 +1,63 @@
+{
+  "id": "level_01",
+  "name": "The Floating Block",
+  "phase": 1,
+  "premise": "A small metal block rests on a workbench in an empty workshop. You watch it\nfor a long moment. It is not quite resting. It hovers a hair's breadth above\nthe wood, drifting down and catching itself, over and over, like a held breath.\nNobody else has noticed. Nobody else ever does.\n\nYou cannot patch reality yet. You can only look, and learn to name what you see.\n",
+  "objective": {
+    "description": "Identify the anomaly by forming the correct prediction about the block.",
+    "condition": "flag:anomaly_identified"
+  },
+  "turn_limit": 8,
+  "initial_resources": {
+    "reality_stability": 100,
+    "memory": 100,
+    "personal_time": 60,
+    "existence": 100,
+    "agent_suspicion": 0
+  },
+  "available_actions": [
+    "OBSERVE",
+    "PREDICT",
+    "WAIT"
+  ],
+  "objects": {
+    "block": {
+      "properties": {
+        "state": "hovering",
+        "gap": "1mm"
+      },
+      "observe_text": "The block hovers about a millimeter above the bench. Watch closely and you\ncan see it fall and re-catch in a steady rhythm — the Reality System\nre-rendering its position faster than gravity can finish the job.\n",
+      "patchable_properties": []
+    },
+    "bench": {
+      "properties": {
+        "material": "wood"
+      },
+      "observe_text": "An ordinary wooden workbench. Its surface is unmarked beneath the block,\nthough by now there should be a faint resting dent. There is none.\n",
+      "patchable_properties": []
+    },
+    "dust": {
+      "properties": {
+        "behavior": "settling"
+      },
+      "observe_text": "Dust settles normally everywhere in the room — except directly beneath the\nblock, where it drifts as if the floor there is being constantly refreshed.\n",
+      "patchable_properties": []
+    }
+  },
+  "predictions": {
+    "block_behavior": {
+      "text": "The block is not floating by some new force. Its position is being\ncorrected by the system every frame — a rendering seam, not a violation of\ngravity. This is an anomaly: a place where reality's bookkeeping shows\nthrough.\n",
+      "reward": "correct_prediction",
+      "effect": {
+        "anomaly_identified": true
+      }
+    },
+    "dust_behavior": {
+      "text": "The drifting dust is downstream of the same seam, not a separate event.\nUseful, but it is not the heart of the anomaly.\n"
+    }
+  },
+  "hidden_rules": [
+    "Reality has seams. Anomalies are places where the system's correction shows through.",
+    "Observation is free, but naming the rule behind an anomaly is what matters."
+  ]
+}

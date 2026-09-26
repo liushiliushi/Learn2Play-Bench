@@ -1,0 +1,25 @@
+{
+  "_note": "Each benchmark game is pinned to ONE seed. `play.py <game>` with no --seed uses this; the lobby locks each game to it; the dashboard shows only this seed; test scripts default to it. Edit here to change the canonical seed for a game.",
+  "seeds": {
+    "primordialsoup": 1,
+    "gemforge": 1,
+    "catnip": 1,
+    "dungeon": 2,
+    "synergycorp": 2,
+    "dreamgarden": 1,
+    "ecosphere": 1,
+    "grapevine": 1,
+    "hauntedinn": 2,
+    "castaway": 1,
+    "roadside_observatory": 2,
+    "lost_and_found": 1,
+    "mola_tea": 1,
+    "plague": 2,
+    "patch_reality_moderate": 1,
+    "poisoner": 2,
+    "hezu": 1,
+    "redeye": 2,
+    "butterfly": 1,
+    "modelkeeper_expert": 1
+  }
+}

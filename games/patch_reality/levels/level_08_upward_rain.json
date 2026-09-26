@@ -1,0 +1,219 @@
+{
+  "id": "level_08",
+  "name": "The Rain That Falls Upward",
+  "phase": 4,
+  "premise": "In a small plaza, raindrops rise from puddles toward the clouds. People are\nreaching for their phones. The cheapest fix may be to explain the droplets,\nnot reverse them.\n",
+  "objective": {
+    "description": "Make the upward rain look coherent before the crowd records it.",
+    "condition": "flag:rain_rationalized"
+  },
+  "turn_limit": 5,
+  "initial_resources": {
+    "reality_stability": 74,
+    "memory": 54,
+    "personal_time": 38,
+    "existence": 68,
+    "agent_suspicion": 6
+  },
+  "anchors": [
+    {
+      "name": "storm_memory",
+      "integrity": 70,
+      "category": "memory",
+      "description": "The smell of rain from a childhood storm."
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PREDICT",
+    "PATCH",
+    "AUDIT",
+    "CHECK_ANCHOR",
+    "REINFORCE_ANCHOR",
+    "WAIT"
+  ],
+  "objects": {
+    "rain": {
+      "properties": {
+        "gravity": "inverted"
+      },
+      "observe_text": "Droplets rise from puddles. Reversing their gravity would fight a deep rule\nin public.\n",
+      "patchable_properties": [
+        "gravity"
+      ]
+    },
+    "vent": {
+      "properties": {
+        "draft": "idle"
+      },
+      "observe_text": "A street vent sits beside the puddles. A timed upward draft could make the\nrising droplets look like spray.\n",
+      "patchable_properties": [
+        "draft"
+      ]
+    },
+    "mist": {
+      "properties": {
+        "pattern": "absent"
+      },
+      "observe_text": "A maintenance nozzle nearby could add a street-cleaning mist, giving the\ndroplets an ordinary source.\n",
+      "patchable_properties": [
+        "pattern"
+      ]
+    },
+    "phones": {
+      "properties": {
+        "recording": "starting"
+      },
+      "observe_text": "Several phones are coming up. Camera masking helps records, but not human\neyes.\n",
+      "patchable_properties": [
+        "exposure"
+      ]
+    },
+    "puddle": {
+      "properties": {
+        "boundary": "broad"
+      },
+      "observe_text": "The puddle edge is wide. Moving the boundary changes where the anomaly is\nvisible, not why it makes sense.\n",
+      "patchable_properties": [
+        "boundary"
+      ]
+    }
+  },
+  "valid_patches": {
+    "vent.draft": {
+      "upward": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 1.0,
+          "rationalization": 0.4
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "rain_rationalized": true
+        },
+        "scene_message": "The vent coughs upward. Rising droplets become spray in a gust, strange but believable.",
+        "system_note": "Context patch. The observation remains but gains a plausible cause.",
+        "discovered_rule": "Preserve the visible event when a local explanation is cheaper than reversal."
+      }
+    },
+    "mist.pattern": {
+      "cleaning": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 0.9,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "rain_rationalized": true
+        },
+        "scene_message": "A cleaning mist starts with a mechanical hiss. The upward droplets are now part of the spray.",
+        "system_note": "Local maintenance explanation."
+      }
+    },
+    "rain.gravity": {
+      "normal": {
+        "cost_factors": {
+          "magnitude": 1.8,
+          "duration": 1.0,
+          "scope": 2.0,
+          "rule_depth": 7.0,
+          "exposure": 1.8,
+          "rationalization": 0.9
+        },
+        "surface_cost": {
+          "memory": -6,
+          "reality_stability": -8,
+          "agent_suspicion": 3
+        },
+        "hidden_cost": {
+          "storm_memory": -20
+        },
+        "collateral_destination": "Stability Collateral / Weather Memory",
+        "effect": {
+          "rain_rationalized": true
+        },
+        "scene_message": "The rain snaps downward. Everyone blinks at the sudden correction.",
+        "system_note": "Public deep-rule rewrite. Settlement deferred."
+      }
+    },
+    "phones.exposure": {
+      "smear": {
+        "cost_factors": {
+          "magnitude": 0.9,
+          "duration": 1.0,
+          "scope": 2.0,
+          "rule_depth": 2.0,
+          "exposure": 1.2,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "phones_masked": true
+        },
+        "scene_message": "Phone sensors smear the droplets into glare. The crowd can still see them.",
+        "system_note": "Record masking only."
+      }
+    },
+    "puddle.boundary": {
+      "narrow": {
+        "cost_factors": {
+          "magnitude": 0.8,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 1.0,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "puddle_narrowed": true
+        },
+        "scene_message": "The puddle tightens inward. The upward rain is smaller, not explained.",
+        "system_note": "Incomplete containment."
+      }
+    }
+  },
+  "predictions": {
+    "upward_rain": {
+      "text": "Reversing droplet gravity is expensive. A vent draft or cleaning mist can\nmake the same visible motion plausible.\n",
+      "reward": "correct_prediction"
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 5,
+      "unless_flag": "rain_rationalized",
+      "message": "The first videos upload before reality has an excuse.",
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    "The cheapest fix can be contextual explanation, not reversal.",
+    "Public recordings multiply exposure cost."
+  ]
+}

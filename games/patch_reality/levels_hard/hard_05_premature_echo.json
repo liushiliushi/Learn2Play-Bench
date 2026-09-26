@@ -1,0 +1,238 @@
+{
+  "id": "hard_05",
+  "name": {
+    "en": "The Premature Echo",
+    "zh": "早到的回声"
+  },
+  "phase": 5,
+  "premise": {
+    "en": "In the concrete stairwell, your footsteps echo wrong. The echo of each step\narrives a fraction of a second before your foot actually lands. It is the kind\nof error that feels like it must be happening inside your own head.\n\nYou can investigate a little before the wrongness settles into something you\nstop noticing. Trust what you measure, not what it feels like.\n",
+    "zh": "在混凝土楼梯井里，你的脚步声回响得不对劲。每一步的回声都比你的脚真正落地\n早到那么一瞬。这是那种让人觉得一定发生在自己脑袋里的错误。\n\n在这股不对劲沉淀成你不再注意的东西之前，你还能稍作探查。相信你测量到的，\n而不是你感觉到的。\n"
+  },
+  "objective": {
+    "description": {
+      "en": "Resolve the stairwell echo at its real cause.",
+      "zh": "在真正的根源处解决楼梯井的回声。"
+    },
+    "condition": "flag:echo_resolved"
+  },
+  "turn_limit": 8,
+  "initial_resources": {
+    "reality_stability": 88,
+    "memory": 68,
+    "personal_time": 42,
+    "existence": 85,
+    "agent_suspicion": 1
+  },
+  "anchors": [
+    {
+      "name": "sensory_baseline",
+      "integrity": 100,
+      "category": "memory",
+      "description": {
+        "en": "The calibrated sense of how your own body meets the world — timing, weight, sound.",
+        "zh": "那套关于你自己身体如何与世界相遇的校准感觉——时机、重量、声音。"
+      }
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PATCH",
+    "AUDIT",
+    "WAIT",
+    "CHECK_ANCHOR"
+  ],
+  "focus_limit": 6,
+  "diagnosis": {
+    "source": {
+      "correct": "environment",
+      "options": [
+        "perception",
+        "environment",
+        "object",
+        "witness_memory"
+      ]
+    },
+    "type": {
+      "correct": "time_order_conflict",
+      "options": [
+        "time_order_conflict",
+        "rendering_lag",
+        "record_conflict",
+        "physics_conflict"
+      ]
+    },
+    "strategy": {
+      "correct": "source_record_repair",
+      "options": [
+        "target_repair",
+        "source_record_repair",
+        "environment_cover",
+        "witness_management"
+      ]
+    }
+  },
+  "objects": {
+    "perception": {
+      "properties": {
+        "sync": "drifting"
+      },
+      "observe_text": {
+        "en": "You turn your attention inward. It genuinely feels like the lag is yours —\nthat your hearing is running ahead of your body. The sensation is convincing,\nand convincing is exactly what a misattributed error feels like.\n",
+        "zh": "你把注意力转向内心。这股延迟确实感觉像是你自己的——仿佛你的听觉跑在了\n身体前面。这种感受很有说服力，而有说服力恰恰正是被错误归因的错误所应有的样子。\n"
+      },
+      "patchable_properties": [
+        "sync"
+      ],
+      "evidence": [
+        "feels_internal"
+      ]
+    },
+    "stairwell": {
+      "properties": {},
+      "observe_text": {
+        "en": "You measure against the wall instead of yourself: tap, then listen. The\nreturned sound consistently precedes the impact, by the same fixed interval,\nindependent of you. The error is out here, in the space — not behind your eyes.\n",
+        "zh": "你不拿自己、而是拿墙壁来做测量：敲一下，再听。返回的声音始终先于撞击发生，\n间隔固定、每次相同，与你无关。错误在外面，在这片空间里——而不在你的眼睛背后。\n"
+      },
+      "patchable_properties": [],
+      "evidence": [
+        "echo_precedes_step"
+      ]
+    },
+    "acoustic_log": {
+      "properties": {
+        "timing": "leading"
+      },
+      "observe_text": {
+        "en": "The stairwell keeps an acoustic record — the layer reality replays sound from.\nIt is patchable, but reading it from the outside tells you little; you would\nhave to audit the record itself to see what its clock is doing.\n",
+        "zh": "楼梯井保存着一份声学记录——现实从这一层重放声音。它是可修补的，但从外部\n去读它告诉不了你多少；你得审计这份记录本身，才能看清它的时钟在做什么。\n"
+      },
+      "patchable_properties": [
+        "timing"
+      ],
+      "evidence": [
+        "log_is_authoritative"
+      ]
+    }
+  },
+  "valid_patches": {
+    "acoustic_log.timing": {
+      "align": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.6,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "echo_resolved": true
+        },
+        "scene_message": {
+          "en": "You realign the stairwell's acoustic record to the present. The echo snaps\nback into place behind each step. The space sounds ordinary again, and your\nown sense of timing was never the problem.\n",
+          "zh": "你把楼梯井的声学记录重新对齐到当下。回声啪地归位，落回每一步之后。这片\n空间重新听起来寻常无奇，而你自己的时机感从来都不是问题所在。\n"
+        },
+        "system_note": {
+          "en": "Repaired the source record's clock. The lag was in the replay layer, not in you.",
+          "zh": "修复了源记录的时钟。延迟在重放层里，不在你身上。"
+        },
+        "discovered_rule": {
+          "en": "When an error feels internal but measures external, fix the source record — not your perception.",
+          "zh": "当一个错误感觉是内部的、却测量出是外部的，修复源记录——而不是你的感知。"
+        }
+      }
+    },
+    "perception.sync": {
+      "+0.5s": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 0.6,
+          "rationalization": 1.0
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -1
+        },
+        "hidden_cost": {
+          "sensory_baseline": -14
+        },
+        "collateral_destination": "Stability Collateral / Sensory Baseline",
+        "effect": {
+          "perception_aligned": true
+        },
+        "scene_message": {
+          "en": "You retune your own perception to match the early echo. For a moment the\nstairwell sounds right — but the echo is still early; you have only taught\nyourself to expect it. Your calibrated sense of your own body pays the bill.\n",
+          "zh": "你重新调校自己的感知，去迎合那提早的回声。有那么一瞬间，楼梯井听起来对了\n——可回声依旧提早；你不过是教会了自己去预期它。你那套关于自身身体的校准感觉\n替你买了单。\n"
+        },
+        "system_note": {
+          "en": "Edited perception to absorb an external fault. The real source kept running ahead.",
+          "zh": "编辑了感知去吸收一个外部故障。真正的源头仍旧跑在前面。"
+        }
+      }
+    }
+  },
+  "patch_requirements": {
+    "acoustic_log.timing align": {
+      "required_evidence": [
+        "log_runs_ahead"
+      ],
+      "helpful_evidence": [
+        "echo_precedes_step"
+      ]
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 8,
+      "unless_flag": "echo_resolved",
+      "message": {
+        "en": "You stop hearing the early echo — not because it stopped, but because you have\nlearned to expect it. The wrongness has become part of how the stairwell sounds.\n",
+        "zh": "你不再听见那提早的回声——不是因为它停了，而是因为你已经学会了预期它。这股\n不对劲已经变成了楼梯井声音的一部分。\n"
+      },
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    {
+      "en": "An error that feels like perception may be external; measure before you attribute it.",
+      "zh": "一个感觉像是感知问题的错误，可能是外部的；在归因之前先测量。"
+    },
+    {
+      "en": "The source record's clock, not your senses, was running ahead.",
+      "zh": "跑在前面的是源记录的时钟，而不是你的感官。"
+    },
+    {
+      "en": "Patching perception to absorb an external fault drains your sensory baseline and fixes nothing.",
+      "zh": "修补感知去吸收一个外部故障会耗尽你的感官基线，而且什么也修不好。"
+    }
+  ],
+  "audit_entries": [
+    {
+      "target": "acoustic_log",
+      "text": {
+        "en": "You audit the acoustic record directly. Its internal clock is running half a\nbeat ahead of real time — every sound is replayed before its cause. This record,\nnot your perception, is the source of the premature echo.\n",
+        "zh": "你直接审计这份声学记录。它的内部时钟比真实时间快了半拍——每一个声音都在其\n成因之前被重放。这份记录，而不是你的感知，才是这早到回声的源头。\n"
+      },
+      "evidence": [
+        "log_runs_ahead"
+      ],
+      "reward_events": [
+        "successful_audit",
+        "reveal_hidden_cost"
+      ],
+      "suspicion_change": 1,
+      "ends_turn": false
+    }
+  ]
+}

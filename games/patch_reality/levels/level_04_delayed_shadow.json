@@ -1,0 +1,132 @@
+{
+  "id": "level_04",
+  "name": "The Delayed Shadow",
+  "phase": 2,
+  "premise": "A man waits at a crosswalk in the afternoon sun. When he shifts his weight, his\nshadow follows a beat late — lagging behind him like a tired echo. Two other\npeople stand nearby. One of them is starting to frown at the pavement.\n\nThe lag is small. If you act before anyone is sure of what they saw, the system\nwill happily explain it away. If you wait, the frown becomes a question, and\nquestions are expensive.\n",
+  "objective": {
+    "description": "Resynchronize the shadow with the man before the anomaly is noticed.",
+    "condition": "flag:shadow_synced"
+  },
+  "turn_limit": 4,
+  "initial_resources": {
+    "reality_stability": 85,
+    "memory": 65,
+    "personal_time": 50,
+    "existence": 80,
+    "agent_suspicion": 1
+  },
+  "anchors": [
+    {
+      "name": "black_notebook",
+      "integrity": 100,
+      "category": "object",
+      "description": "A worn black notebook filled with your own handwriting."
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PREDICT",
+    "PATCH",
+    "WAIT"
+  ],
+  "objects": {
+    "shadow": {
+      "properties": {
+        "lag": "0.4s"
+      },
+      "observe_text": "The man's shadow trails his movements by about four-tenths of a second. You\ncould re-pin the shadow's render to his body directly — effective, but a\nshadow snapping into place is the sort of thing a watching eye remembers.\n",
+      "patchable_properties": [
+        "render_sync"
+      ]
+    },
+    "sunlight": {
+      "properties": {
+        "angle": "low",
+        "flicker": "none"
+      },
+      "observe_text": "Low afternoon sun through moving leaves. A brief, natural flicker of light\nhere would give every shadow a reason to jump — and the man's would re-sync\nunder cover of an ordinary trick of the light.\n",
+      "patchable_properties": [
+        "flicker"
+      ]
+    },
+    "onlookers": {
+      "properties": {
+        "suspicion": "rising"
+      },
+      "observe_text": "Two bystanders. One has noticed the shadow and is beginning to stare. The\nlonger the anomaly stands, the more certain their memory of it becomes.\n",
+      "patchable_properties": []
+    }
+  },
+  "valid_patches": {
+    "sunlight.flicker": {
+      "+1": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 3.0,
+          "exposure": 0.8,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "shadow_synced": true
+        },
+        "scene_message": "Leaves stir; the light flickers once. Every shadow in the plaza jumps at\nonce — and when they settle, the man's shadow sits exactly where it should.\nThe staring bystander blinks, decides it was the sun, and looks away.\n",
+        "system_note": "Rationalized as natural light variation. Suspicion eased.",
+        "discovered_rule": "An indirect patch with a built-in excuse calms onlookers instead of alarming them."
+      }
+    },
+    "shadow.render_sync": {
+      "+0.4s": {
+        "cost_factors": {
+          "magnitude": 1.4,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 3.0,
+          "exposure": 1.6,
+          "rationalization": 0.8
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -3,
+          "agent_suspicion": 2
+        },
+        "hidden_cost": {
+          "black_notebook": -1
+        },
+        "collateral_destination": "Stability Collateral / Personal History",
+        "effect": {
+          "shadow_synced": true
+        },
+        "scene_message": "You re-pin the shadow to the man's body. It snaps into place mid-step. It\nis fixed — but the staring bystander saw it move wrong, and now saw it move\nright, and will carry both. Something is quietly debited to cover the seam.\n",
+        "system_note": "Direct render edit under observation. Settlement deferred."
+      }
+    }
+  },
+  "predictions": {
+    "shadow_lag": {
+      "text": "The shadow lags the body, so the render is trailing real time. The cheapest\nfix is to give every shadow an honest reason to jump at once — a flicker of\nlight — rather than snapping this one shadow while people are watching.\n",
+      "reward": "correct_prediction"
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 4,
+      "unless_flag": "shadow_synced",
+      "message": "The bystander's frown hardens into certainty. They tug a friend's sleeve and\npoint. Two more memories of the impossible are now fixed in the world, and\nsomewhere a Stability Agent turns its attention this way.\n",
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    "A patch that arrives with its own ordinary explanation can lower suspicion, not just avoid raising it.",
+    "Exposure is a cost multiplier; the same edit is far more expensive while people are watching.",
+    "Waiting lets onlookers' memories harden, raising the cost of every later fix."
+  ]
+}

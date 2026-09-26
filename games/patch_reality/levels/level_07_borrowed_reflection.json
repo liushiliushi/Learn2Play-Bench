@@ -1,0 +1,193 @@
+{
+  "id": "level_07",
+  "name": "The Borrowed Reflection",
+  "phase": 3,
+  "premise": "In a narrow washroom mirror, your reflection wears your face one expression\nbehind. You blink; it smiles late. A stranger at the sink has noticed the lag.\n",
+  "objective": {
+    "description": "Restore the mirror reflection without damaging identity anchors.",
+    "condition": "flag:reflection_restored"
+  },
+  "turn_limit": 5,
+  "initial_resources": {
+    "reality_stability": 76,
+    "memory": 56,
+    "personal_time": 40,
+    "existence": 68,
+    "agent_suspicion": 4
+  },
+  "anchors": [
+    {
+      "name": "true_name",
+      "integrity": 80,
+      "category": "name",
+      "description": "Your own name, spoken in your own voice."
+    },
+    {
+      "name": "black_notebook",
+      "integrity": 100,
+      "category": "object",
+      "description": "A worn black notebook filled with your own handwriting."
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PREDICT",
+    "PATCH",
+    "AUDIT",
+    "CHECK_ANCHOR",
+    "REINFORCE_ANCHOR",
+    "WAIT"
+  ],
+  "objects": {
+    "mirror": {
+      "properties": {
+        "latency": "one_expression"
+      },
+      "observe_text": "The mirror surface is late, not your face. Adjusting the reflective medium\nkeeps the edit outside your identity.\n",
+      "patchable_properties": [
+        "latency"
+      ]
+    },
+    "lighting": {
+      "properties": {
+        "angle": "harsh"
+      },
+      "observe_text": "The overhead light flashes on the mirror edge. A small angle shift could\nmake the delayed expression pass as glare and settle the reflection.\n",
+      "patchable_properties": [
+        "angle"
+      ]
+    },
+    "face": {
+      "properties": {
+        "state": "stable"
+      },
+      "observe_text": "Your face is not late. Editing it directly would touch identity state, not\nperception state.\n",
+      "patchable_properties": [
+        "expression"
+      ]
+    },
+    "witness": {
+      "properties": {
+        "attention": "rising"
+      },
+      "observe_text": "The stranger has not decided what they saw. Distracting them helps exposure,\nbut does not restore the reflection.\n",
+      "patchable_properties": [
+        "attention"
+      ]
+    }
+  },
+  "valid_patches": {
+    "mirror.latency": {
+      "sync": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 3.0,
+          "exposure": 1.0,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "reflection_restored": true
+        },
+        "scene_message": "The mirror catches up in a single soft shimmer. Your face remains yours.",
+        "system_note": "Medium-scoped repair. Identity untouched.",
+        "discovered_rule": "Self-scoped perception edits are not the same as identity edits."
+      }
+    },
+    "lighting.angle": {
+      "soften": {
+        "cost_factors": {
+          "magnitude": 0.9,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 2.0,
+          "exposure": 0.8,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -2
+        },
+        "hidden_cost": {},
+        "effect": {
+          "reflection_restored": true
+        },
+        "scene_message": "The light shifts, glare washes the seam, and the reflection returns in step.",
+        "system_note": "Plausible optical cover. Low exposure."
+      }
+    },
+    "face.expression": {
+      "match": {
+        "cost_factors": {
+          "magnitude": 1.4,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 6.0,
+          "exposure": 1.1,
+          "rationalization": 0.9
+        },
+        "surface_cost": {
+          "existence": -4,
+          "memory": -4,
+          "agent_suspicion": 1
+        },
+        "hidden_cost": {
+          "true_name": -18
+        },
+        "collateral_destination": "Stability Collateral / Identity",
+        "effect": {
+          "reflection_restored": true
+        },
+        "scene_message": "You force your face to meet the mirror. It works, but your name feels briefly misfiled.",
+        "system_note": "Identity-adjacent edit. Collateral settlement deferred."
+      }
+    },
+    "witness.attention": {
+      "distract": {
+        "cost_factors": {
+          "magnitude": 0.7,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.8,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "memory": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "witness_distracted": true
+        },
+        "scene_message": "The stranger looks down at the running tap. The reflection is still late.",
+        "system_note": "Exposure reduction only."
+      }
+    }
+  },
+  "predictions": {
+    "reflection_lag": {
+      "text": "The risk is identity. Patch the mirror or light, not your face state.\n",
+      "reward": "correct_prediction"
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 5,
+      "unless_flag": "reflection_restored",
+      "message": "The stranger meets your eyes in the mirror and remembers the lag.",
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    "Identity anchors are more fragile than perception sync.",
+    "Change reflective context before changing a person."
+  ]
+}

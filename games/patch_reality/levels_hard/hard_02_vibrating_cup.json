@@ -1,0 +1,236 @@
+{
+  "id": "hard_02",
+  "name": {
+    "en": "The Vibrating Cup",
+    "zh": "嗡鸣的玻璃杯"
+  },
+  "phase": 5,
+  "premise": {
+    "en": "A glass cup is buzzing on the kitchen table. Not sliding, not ringing from a\npassing truck — just trembling in place, a fine continuous shiver, as if the\ntable beneath it were never quite still.\n\nThe obvious move is to settle the surface it stands on. But the table feels wrong\nin a way you cannot place, and the cup's tremor has a rhythm too regular to be an\naccident of the room.\n",
+    "zh": "厨房桌上，一只玻璃杯正在嗡嗡作响。它没有滑动，也不是被驶过的卡车震得叮当——只是\n原地颤抖，一种细密而绵延的战栗，仿佛它下方的桌子从未真正安定过。\n\n显而易见的做法，是去安抚它所立着的那块表面。可这张桌子有某种你说不清的不对劲，而\n杯子的颤动，节律又规整得不像是房间里偶然发生的意外。\n"
+  },
+  "objective": {
+    "description": {
+      "en": "Stop the cup from vibrating, at its real cause.",
+      "zh": "在真正的根因处止住玻璃杯的颤动。"
+    },
+    "condition": "flag:cup_stable"
+  },
+  "turn_limit": 8,
+  "initial_resources": {
+    "reality_stability": 90,
+    "memory": 70,
+    "personal_time": 45,
+    "existence": 88,
+    "agent_suspicion": 0
+  },
+  "anchors": [
+    {
+      "name": "room_anchor",
+      "integrity": 100,
+      "category": "place",
+      "description": {
+        "en": "The settled, lived-in feel of this kitchen — the floor, the walls, the way it holds together.",
+        "zh": "这间厨房安定而有人居住的气息——地板、墙壁，以及它彼此维系成一体的方式。"
+      }
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PATCH",
+    "AUDIT",
+    "WAIT",
+    "CHECK_ANCHOR"
+  ],
+  "diagnosis": {
+    "source": {
+      "correct": "residual_patch",
+      "options": [
+        "environment",
+        "residual_patch",
+        "object"
+      ]
+    },
+    "type": {
+      "correct": "residual_contamination",
+      "options": [
+        "physics_conflict",
+        "residual_contamination",
+        "record_conflict"
+      ]
+    },
+    "strategy": {
+      "correct": "audit_first",
+      "options": [
+        "environment_cover",
+        "audit_first",
+        "target_repair"
+      ]
+    }
+  },
+  "objects": {
+    "cup": {
+      "properties": {
+        "state": "vibrating"
+      },
+      "observe_text": {
+        "en": "The cup shivers at a fixed, even frequency. The motion does not build or fade;\nit simply repeats, as though it were replaying something rather than reacting\nto anything happening now.\n",
+        "zh": "杯子以一种固定而均匀的频率颤动。这动作既不增强也不消退；它只是不断重复，仿佛\n在回放着某样东西，而非对此刻正在发生的任何事做出反应。\n"
+      },
+      "patchable_properties": [],
+      "evidence": [
+        "resonance_periodic"
+      ]
+    },
+    "table": {
+      "properties": {
+        "surface": "still"
+      },
+      "observe_text": {
+        "en": "The table is solid and motionless. Nothing about its surface is feeding the\ncup's tremor — whatever is shaking the cup is not coming up through the wood.\n",
+        "zh": "桌子坚实而纹丝不动。它的表面没有任何东西在助长杯子的颤动——无论是什么在晃动着\n杯子，那东西都不是从木头里向上传来的。\n"
+      },
+      "patchable_properties": [
+        "friction"
+      ],
+      "evidence": [
+        "table_inert"
+      ]
+    },
+    "residual_patch": {
+      "properties": {
+        "state": "embedded"
+      },
+      "observe_text": {
+        "en": "Underneath the ordinary surface of the room there is a faint seam, the scar of\nan old repair that was never cleared. It is hard to read from the outside; you\nwould have to audit it directly to know what it is still doing.\n",
+        "zh": "在房间寻常的表面之下，有一道淡淡的接缝，是一次从未被清除的旧修补留下的疤痕。\n它从外部很难读懂；你得直接对它做审计，才能知道它至今还在做着什么。\n"
+      },
+      "patchable_properties": [
+        "state"
+      ],
+      "evidence": [
+        "old_seam_visible"
+      ]
+    }
+  },
+  "valid_patches": {
+    "residual_patch.state": {
+      "expire": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.6,
+          "rationalization": 0.6
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "cup_stable": true
+        },
+        "scene_message": {
+          "en": "You let the old, forgotten repair expire. As it dissolves, the cup's tremor\ndies with it — the shaking was its leftover signal, looping in place. The\nroom settles, genuinely still for the first time.\n",
+          "zh": "你让那次古老而被遗忘的修补到期消解。随着它的溶散，杯子的颤动也随之止息——那\n晃动本是它残留的信号，在原地循环不止。房间安定下来，第一次真正地归于沉静。\n"
+        },
+        "system_note": {
+          "en": "Cleared a stale residual patch at its source. No collateral.",
+          "zh": "在源头清除了一处陈旧的残留补丁。无附带损失。"
+        },
+        "discovered_rule": {
+          "en": "When the environment itself is the leftover of an old patch, clear the residual — do not patch over it.",
+          "zh": "当环境本身就是某次旧补丁的残留时，清除那处残留补丁——不要在它之上再打补丁。"
+        }
+      }
+    },
+    "table.friction": {
+      "stabilize": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.5,
+          "rule_depth": 2.0,
+          "exposure": 0.8,
+          "rationalization": 1.0
+        },
+        "surface_cost": {
+          "memory": -2,
+          "reality_stability": -2
+        },
+        "hidden_cost": {
+          "room_anchor": -12
+        },
+        "collateral_destination": "Stability Collateral / Room Structure",
+        "effect": {
+          "surface_dampened": true
+        },
+        "scene_message": {
+          "en": "You damp the table. The cup quiets for a moment — then resumes, the same\neven tremor as before. The shaking was never coming from the table, and\nforcing the surface to absorb it has pressed the old seam deeper into the\nfloor.\n",
+          "zh": "你给桌子施加阻尼。杯子安静了片刻——随即又重新开始，仍是先前那同样均匀的颤动。\n晃动从来就不是来自桌子，而强迫表面去吸收它，反倒把那道旧接缝更深地压进了\n地板里。\n"
+        },
+        "system_note": {
+          "en": "Patched over a contaminated environment. The residual was compressed, not cleared.",
+          "zh": "在一个被污染的环境之上打了补丁。那处残留补丁被压实了，而非被清除。"
+        }
+      }
+    }
+  },
+  "patch_requirements": {
+    "residual_patch.state expire": {
+      "required_evidence": [
+        "residual_patch_present"
+      ],
+      "helpful_evidence": [
+        "old_seam_visible"
+      ]
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 8,
+      "unless_flag": "cup_stable",
+      "message": {
+        "en": "The tremor has not stopped. It is spreading — the window glass has begun to\nhum along with the cup.\n",
+        "zh": "颤动没有停下。它正在蔓延——窗玻璃也开始随着杯子一同嗡鸣起来。\n"
+      },
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    {
+      "en": "Environment patches are usually safe — but not when the environment is itself a contaminated old patch.",
+      "zh": "针对环境的补丁通常是安全的——但当环境本身就是一处被污染的旧补丁时则不然。"
+    },
+    {
+      "en": "Auditing the seam reveals what the surface cannot show you.",
+      "zh": "对接缝做审计，能揭示出表面无法向你显示的东西。"
+    },
+    {
+      "en": "Damping the symptom presses the residual deeper and damages the room.",
+      "zh": "对症状施加阻尼，会把那处残留补丁压得更深，并损害房间。"
+    }
+  ],
+  "audit_entries": [
+    {
+      "target": "residual_patch",
+      "text": {
+        "en": "You audit the seam directly. It is a residual patch — an old repair left to\nexpire that never did, still emitting the signal the cup is helplessly echoing.\nThe environment here is the contamination.\n",
+        "zh": "你直接对那道接缝做审计。它是一处残留补丁——一次本该到期消解却始终未消\n的旧修补，仍在持续发出那个信号，而杯子正无助地回响着它。此处的环境，就是那份\n污染本身。\n"
+      },
+      "evidence": [
+        "residual_patch_present"
+      ],
+      "reward_events": [
+        "successful_audit",
+        "reveal_hidden_cost"
+      ],
+      "suspicion_change": 1,
+      "ends_turn": false
+    }
+  ]
+}

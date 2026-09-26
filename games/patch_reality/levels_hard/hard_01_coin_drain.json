@@ -1,0 +1,224 @@
+{
+  "id": "hard_01",
+  "name": {
+    "en": "The Coin and the Storm Drain",
+    "zh": "硬币与雨水渠"
+  },
+  "phase": 5,
+  "premise": {
+    "en": "A copper coin is rolling, slow and certain, across the pavement toward the black\nslot of a storm drain. When it drops, it is gone — and the small wrongness that\nset it rolling will be gone with it, unexamined, into the dark.\n\nYou have time for a few careful looks before it reaches the edge. What you decide\nto do should follow from what you actually find, not from what worked last time.\n",
+    "zh": "一枚铜币正缓慢而笃定地滚过人行道，朝着雨水渠那道黑色的缝隙而去。一旦它落下去，\n就再也找不回来了——那让它开始滚动的、细微的不对劲，也将随它一同没入黑暗，\n无人查究。\n\n在它抵达边缘之前，你还有时间仔细看上几眼。你决定要做什么，应当源自你实际查到的东西，\n而不是上次奏效的那套办法。\n"
+  },
+  "objective": {
+    "description": {
+      "en": "Stop the coin before it reaches the drain.",
+      "zh": "在硬币落入雨水渠之前阻止它。"
+    },
+    "condition": "flag:coin_stops"
+  },
+  "turn_limit": 8,
+  "initial_resources": {
+    "reality_stability": 95,
+    "memory": 75,
+    "personal_time": 45,
+    "existence": 90,
+    "agent_suspicion": 0
+  },
+  "anchors": [
+    {
+      "name": "black_notebook",
+      "integrity": 100,
+      "category": "object",
+      "description": {
+        "en": "A worn black notebook filled with your own handwriting.",
+        "zh": "一本磨损的黑色笔记本，里面写满了你自己的笔迹。"
+      }
+    }
+  ],
+  "available_actions": [
+    "OBSERVE",
+    "PATCH",
+    "AUDIT",
+    "WAIT",
+    "CHECK_ANCHOR"
+  ],
+  "diagnosis": {
+    "source": {
+      "correct": "environment",
+      "options": [
+        "object",
+        "environment",
+        "perception"
+      ]
+    },
+    "type": {
+      "correct": "physics_conflict",
+      "options": [
+        "physics_conflict",
+        "record_conflict",
+        "identity_record_trap"
+      ]
+    },
+    "strategy": {
+      "correct": "environment_cover",
+      "options": [
+        "environment_cover",
+        "target_repair",
+        "audit_first"
+      ]
+    }
+  },
+  "objects": {
+    "coin": {
+      "properties": {
+        "path": "rolling_toward_drain",
+        "distance_to_drain": 3
+      },
+      "observe_text": {
+        "en": "The coin turns over slowly, almost lazily. Its speed is low and its line is\nstraight — nothing is pushing it but a faint, even tilt in the ground.\n",
+        "zh": "硬币缓慢地翻滚着，近乎慵懒。它的速度很低，行进的线路笔直——除了地面那一道\n微弱而均匀的倾斜，没有别的东西在推它。\n"
+      },
+      "patchable_properties": [
+        "path"
+      ],
+      "evidence": [
+        "low_speed",
+        "trajectory_stable"
+      ]
+    },
+    "pavement": {
+      "properties": {
+        "surface": "damp"
+      },
+      "observe_text": {
+        "en": "The pavement is wet from an earlier rain and slopes gently toward the grate.\nThe film of water has left it slick; a slightly grippier surface here would\nbe an entirely ordinary thing for a drying street.\n",
+        "zh": "人行道被先前的一场雨打湿，朝着排水格栅缓缓倾斜。那层水膜让路面变得湿滑；\n对一条正在变干的街道来说，这里出现一片稍微涩一点的路面，是再寻常不过的事。\n"
+      },
+      "patchable_properties": [
+        "friction"
+      ],
+      "evidence": [
+        "surface_wet",
+        "mild_slope"
+      ]
+    },
+    "drain": {
+      "properties": {
+        "deadline": "short"
+      },
+      "observe_text": {
+        "en": "The storm drain's grate is narrow and close. Once the coin reaches it there\nwill be no second attempt — only a few turns remain.\n",
+        "zh": "雨水渠的格栅又窄又近。硬币一旦抵达那里，就不会有第二次机会了——只剩下寥寥\n几个回合。\n"
+      },
+      "patchable_properties": [],
+      "evidence": [
+        "deadline_short"
+      ]
+    }
+  },
+  "valid_patches": {
+    "pavement.friction": {
+      "+15%": {
+        "cost_factors": {
+          "magnitude": 1.0,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 1.0,
+          "exposure": 0.8,
+          "rationalization": 0.5
+        },
+        "surface_cost": {
+          "memory": -1,
+          "reality_stability": -1
+        },
+        "hidden_cost": {},
+        "effect": {
+          "coin_stops": true
+        },
+        "scene_message": {
+          "en": "You let the drying pavement grip a fraction harder. The coin slows, wobbles,\nand topples flat a hand's width from the grate. Nothing about the street\nlooks out of place.\n",
+          "zh": "你让正在变干的人行道抓得稍微紧了那么一点。硬币慢了下来，晃了晃，在离格栅\n一掌宽的地方平平倒下。这条街看不出有任何不对劲的地方。\n"
+        },
+        "system_note": {
+          "en": "Rationalized as an ordinary drying surface. Fully settled, no collateral.",
+          "zh": "被合理化为一片寻常的、正在变干的路面。已完全结算，无附带损失。"
+        },
+        "discovered_rule": {
+          "en": "When the cause lives in the environment, a small local nudge there is the cheapest containment.",
+          "zh": "当成因藏在环境之中时，在那里施加一点小小的局部推动，便是代价最低的遏制之法。"
+        }
+      }
+    },
+    "coin.path": {
+      "+3cm": {
+        "cost_factors": {
+          "magnitude": 1.5,
+          "duration": 1.0,
+          "scope": 1.0,
+          "rule_depth": 4.0,
+          "exposure": 1.0,
+          "rationalization": 1.0
+        },
+        "surface_cost": {
+          "memory": -3,
+          "reality_stability": -3,
+          "agent_suspicion": 1
+        },
+        "hidden_cost": {
+          "black_notebook": -8
+        },
+        "collateral_destination": "Stability Collateral / Personal History",
+        "effect": {
+          "coin_stops": true
+        },
+        "scene_message": {
+          "en": "You reach past the street and edit the coin's path directly. It stops dead,\nmid-roll, in a way no coin ever has. The fix holds — but something in your\nown records shifts to pay for the impossibility.\n",
+          "zh": "你越过这条街，直接改写了硬币的行进路线。它在滚动途中戛然而止，停得僵硬，\n没有任何一枚硬币曾这样停过。修补稳住了——但你自己的记录里有什么东西发生了\n挪移，去为这桩不可能之事付账。\n"
+        },
+        "system_note": {
+          "en": "Direct edit of an object's trajectory. Settlement deferred against personal history.",
+          "zh": "对一个物体的轨迹进行了直接编辑。结算被推迟，记在个人历史的账上。"
+        }
+      }
+    }
+  },
+  "patch_requirements": {
+    "pavement.friction +15%": {
+      "required_evidence": [
+        "surface_wet"
+      ],
+      "helpful_evidence": [
+        "mild_slope",
+        "low_speed"
+      ]
+    }
+  },
+  "scene_progression": [
+    {
+      "turn": 8,
+      "unless_flag": "coin_stops",
+      "message": {
+        "en": "The coin reaches the grate, tips on its edge, and drops. It is gone.\n",
+        "zh": "硬币抵达格栅，立起身来，落了下去。它消失了。\n"
+      },
+      "effect": {
+        "objective_failed": true
+      }
+    }
+  ],
+  "hidden_rules": [
+    {
+      "en": "Observation yields evidence, not the answer; combine evidence to choose a patch.",
+      "zh": "观察给出的是证据而非答案；要综合证据来选择补丁。"
+    },
+    {
+      "en": "Sometimes the familiar environmental fix really is correct — but only once the evidence supports it.",
+      "zh": "有时那个熟悉的环境修补法确实是对的——但前提是证据支持它。"
+    },
+    {
+      "en": "A direct edit of the object works too, but it is paid for quietly out of your anchors.",
+      "zh": "直接编辑物体本身也行得通，但其代价会悄悄从你的锚点里扣除。"
+    }
+  ],
+  "audit_entries": []
+}
