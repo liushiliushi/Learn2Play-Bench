@@ -10,6 +10,6 @@ Use Python 3.10 or newer. The games in this snapshot use the standard library.
 python play.py poisoner --seed 2 --episode 1 --lang en
 ```
 
-Enter an action at the prompt. The commands `valid`, `status`, `score`, and `quit` show available actions, the current state, the score, and the final score. The official game IDs and seeds are listed in [`default_seeds.json`](default_seeds.json).
+Enter an action at the prompt. The commands `valid`, `status`, `score`, and `quit` show available actions, the current state, the score, and the final score. The official game IDs and seeds are listed in `default_seeds.json`.
 
 To play another episode of a game, keep the seed and change `--episode`. The game rules remain the same across episodes, while the visible instance changes in the re-shuffled games.
